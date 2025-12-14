@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "spotify-tests"
+version = "0.1.0"
+description = ""
+authors = ["kris-zvereva <krs.zvrv@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pytest = "^9.0.2"
+spotipy = "^2.25.2"
+selenium = "^4.26.1"
+selene = "^2.0.0rc4"
+faker = "^38.2.0"
+allure-python-commons = "^2.15.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
