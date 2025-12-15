@@ -20,6 +20,9 @@ class TestSignUpValidationsAndroid:
         with step('Skip email and verify the next button is disabled'):
             android_signup_page.is_email_next_button_disabled()
 
+            with step('Verify the error is displayed'):
+                assert_signup.verify_email_error_displayed()
+
 
     @allure.title('Password field is required for registration')
     @allure.description('Next button disabled and navigation blocked without password')
@@ -36,4 +39,5 @@ class TestSignUpValidationsAndroid:
         with step('Skip password and and verify the next button is disabled'):
             android_signup_page.is_password_next_button_disabled()
 
-        # todo fix why tests fail if run from class not separately
+            with step('Verify the error is displayed'):
+                assert_signup.verify_password_error_displayed()

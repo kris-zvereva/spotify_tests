@@ -38,21 +38,6 @@ def _generate_random_username():
     return fake.user_name()
 
 
-def _generate_random_birthday():
-    """
-    Generates random birthdate (age 21-25 years)
-    Returns dict with day, month, year
-    """
-    # Random date between 21 and 25 years old
-    random_date = fake.date_of_birth(minimum_age=21, maximum_age=25)
-
-    return {
-        'day': str(random_date.day),
-        'month': random_date.strftime('%B'),
-        'year': '2003'
-    }
-
-
 def _generate_random_gender():
     """Generates random gender from enum"""
     return random.choice(list(Gender)).value
@@ -75,10 +60,11 @@ def generate_test_user():
         'email': _generate_random_email(),
         'password': _generate_random_password(),
         'username': _generate_random_username(),
-        'birthday': _generate_random_birthday(),
         'gender': _generate_random_gender(),
+        'birthday': {'day': '14', 'month': 'October', 'year': '2003'},
         'artists': ['System Of A Down', 'Sofia Isella', 'Noga Erez'],
     }
+
 
 INVALID_PASSWORDS = {
     'too_short': 'Short1!',

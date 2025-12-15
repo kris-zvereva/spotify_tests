@@ -12,17 +12,6 @@ class SignUpPageLocatorsAndroid:
     PASSWORD_INPUT = (AppiumBy.ID, 'com.spotify.music:id/input_password')
     PASSWORD_NEXT_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/password_next_button')
 
-    # TODO doublechek
-    BIRTH_MONTH_PICKER = (
-        AppiumBy.ANDROID_UIAUTOMATOR,
-        'new UiSelector().resourceId("android:id/numberpicker_input").instance(0)'
-)
-
-    BIRTH_DAY_PICKER = (
-        AppiumBy.ANDROID_UIAUTOMATOR,
-        'new UiSelector().resourceId("android:id/numberpicker_input").instance(1)'
-    )
-
     BIRTH_YEAR_PICKER = (
         AppiumBy.ANDROID_UIAUTOMATOR,
         'new UiSelector().resourceId("android:id/numberpicker_input").instance(2)'
@@ -44,10 +33,10 @@ class SignUpPageLocatorsAndroid:
         "other": (AppiumBy.ID, 'com.spotify.music:id/gender_button_other'),
         "prefer_not_to_say": (AppiumBy.ID, 'com.spotify.music:id/gender_button_prefer_not_say'),
     }
-    # no next button in gender screen
+
 
     USERNAME_INPUT = (AppiumBy.ID, 'com.spotify.music:id/name')
-#username + marketing in one screem
+
     AGREE_TERMS_SWITCH = (
         AppiumBy.ANDROID_UIAUTOMATOR,
         'new UiSelector().resourceId("com.spotify.music:id/switch_agree").instance(0)'
@@ -57,20 +46,19 @@ class SignUpPageLocatorsAndroid:
         AppiumBy.ANDROID_UIAUTOMATOR,
         'new UiSelector().resourceId("com.spotify.music:id/switch_agree").instance(1)'
     )
-    CREATE_ACCOUNT_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/name_next_button') # need to click to create acc
+    CREATE_ACCOUNT_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/name_next_button')
     DECLINE_NOTIFICATION_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/decline')
     #account created, need to select min 3 artists
     SEARCH_FIELD = (AppiumBy.ID, 'com.spotify.music:id/search_field_root')
     SEARCH_INPUT = (AppiumBy.ID, 'com.spotify.music:id/query')
-    ARTIST_BY_NAME_TEMPLATE = 'new UiSelector().text("{}")' # todo вынести в post sign up класс
+    ARTIST_BY_NAME_TEMPLATE = 'new UiSelector().text("{}")'
     FIRST_SUGGESTED_ARTIST = (AppiumBy.ANDROID_UIAUTOMATOR, 'new UiSelector().resourceId("com.spotify.music:id/row_root").instance(0)')
 
 
     DONE_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/actionButton')
-    NOT_NOW_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/secondary_button') # can be not used
-    PRIMARY_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/primary_button') # used to click start listening and then if displayed = user is logged in?
+    NOT_NOW_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/secondary_button')
+    PRIMARY_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/primary_button')
 
-    #final to check user is logged in
     GO_TO_PROFILE_SETTINGS = (AppiumBy.ACCESSIBILITY_ID, 'Go to profile and settings')
 
 

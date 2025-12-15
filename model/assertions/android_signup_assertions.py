@@ -1,6 +1,6 @@
 from selene import browser, be
 
-from model.locators.android_signup_locators import SignUpPageLocatorsAndroid
+from model.locators.android_signup_locators import SignUpPageLocatorsAndroid, SignUpErrorLocatorsAndroid
 
 
 class SignUpAssertionsAndroid:
@@ -9,3 +9,11 @@ class SignUpAssertionsAndroid:
     def verify_profile_button_visible(self):
         """Verify profile settings button is visible (Android)"""
         browser.element(SignUpPageLocatorsAndroid.GO_TO_PROFILE_SETTINGS).should(be.visible)
+
+    def verify_email_error_displayed(self):
+        """Verify email error is visible (Android)"""
+        browser.element(SignUpErrorLocatorsAndroid.EMAIL_ERROR_MESSAGE).should(be.visible)
+
+    def verify_password_error_displayed(self):
+        """Verify password error is visible (Android)"""
+        browser.element(SignUpErrorLocatorsAndroid.PASSWORD_ERROR_MESSAGE).should(be.visible)
