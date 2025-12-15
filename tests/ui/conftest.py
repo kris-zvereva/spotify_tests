@@ -4,8 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import browser
 
-from model.assertions.signup_assertions import SignUpAssertions
-from model.pages.web_signup_page import SignUpPage
+from model.assertions.web_signup_assertions import SignUpAssertions
+from model.pages.web.web_signup_page import SignUpPage
 from utils.user_data import generate_test_user
 
 

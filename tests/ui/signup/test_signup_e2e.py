@@ -18,13 +18,13 @@ class TestSignUp:
         with step('Click signup button'):
             signup_page.click_signup_button()
 
-        with step(f'Fill email'):
+        with step('Fill email'):
             signup_page.fill_signup_step_email(test_user['email'])
 
         with step('Fill password'):
             signup_page.fill_signup_step_password(test_user['password'])
 
-        with step(f'Fill user info: username, gender and DOB'):
+        with step('Fill user info: username, gender and DOB'):
             signup_page.fill_signup_step_info(test_user)
 
         with step('Accept terms and conditions'):
@@ -32,3 +32,5 @@ class TestSignUp:
 
             with step(f'Verify successful signup for user: {test_user["username"]}'):
                 assert_signup.verify_successful_signup(test_user['username'])
+
+                # todo linter подключить вычистить

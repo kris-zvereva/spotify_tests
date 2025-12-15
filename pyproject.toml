@@ -13,6 +13,7 @@ selenium = "^4.26.1"
 selene = "^2.0.0rc4"
 faker = "^38.2.0"
 allure-python-commons = "^2.15.2"
+appium-python-client = "^5.2.4"
 
 
 [build-system]

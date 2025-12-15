@@ -16,6 +16,21 @@ attrs = ">=16.0.0"
 pluggy = ">=0.4.0"
 
 [[package]]
+name = "appium-python-client"
+version = "5.2.4"
+description = "Python client for Appium"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "appium_python_client-5.2.4-py3-none-any.whl", hash = "sha256:1c8ccdc1b6e5c88e9835f4d81d338cae574e74114a85d5ffaa049d9b0fb4c32a"},
+    {file = "appium_python_client-5.2.4.tar.gz", hash = "sha256:eafeee9ff1ad8ac3052d2f706dca5cb52ebf51b5335f1f7102c71a663ee18c13"},
+]
+
+[package.dependencies]
+selenium = ">=4.26,<5.0"
+typing-extensions = ">=4.13,<5.0"
+
+[[package]]
 name = "async-timeout"
 version = "5.0.1"
 description = "Timeout context manager for asyncio programs"
@@ -664,4 +679,4 @@ h11 = ">=0.16.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4d8b31c68d994d9b14c23edd5c3e4bb6bf02fe0b2be31b00e63a27da19e751d4"
+content-hash = "81382c832d6dd9634defc5bc4d701cad44f8e0bfe73e112eccf31248665a7803"

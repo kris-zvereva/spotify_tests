@@ -3,7 +3,7 @@ from model.enums.signup_error_messages import ErrorMessages
 from model.locators.web_signup_page_locators import SignUpPageLocators, SignUpErrorLocators
 
 class SignUpAssertions:
-    """All signup verification methods"""
+    """All signup verification methods for web"""
 
     def verify_successful_signup(self, username):
         browser.element(by.xpath(SignUpPageLocators.USER_ACCOUNT_BUTTON)).should(have.attribute('aria-label', username))

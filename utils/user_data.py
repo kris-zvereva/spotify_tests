@@ -40,16 +40,16 @@ def _generate_random_username():
 
 def _generate_random_birthday():
     """
-    Generates random birthdate (age 21-60 years)
+    Generates random birthdate (age 21-25 years)
     Returns dict with day, month, year
     """
-    # Random date between 21 and 60 years old
-    random_date = fake.date_of_birth(minimum_age=21, maximum_age=60)
+    # Random date between 21 and 25 years old
+    random_date = fake.date_of_birth(minimum_age=21, maximum_age=25)
 
     return {
         'day': str(random_date.day),
-        'month': random_date.strftime('%B'),  # "January", "February", etc.
-        'year': str(random_date.year)
+        'month': random_date.strftime('%B'),
+        'year': '2003'
     }
 
 
@@ -91,3 +91,4 @@ INVALID_BIRTHDAYS = {
     'invalid_year': {'day': '15', 'month': 'January', 'year': '90'},
     'missing_month': {'day': '15', 'month': None, 'year': '1990'},
 }
+ARTISTS = ['System Of A Down', 'Sofia Isella', 'Noga Erez']
