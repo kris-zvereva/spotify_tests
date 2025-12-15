@@ -1,5 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from selene import browser, query
+from selene import browser, query, be
 from model.locators.android_signup_locators import SignUpPageLocatorsAndroid
 
 
@@ -23,24 +23,29 @@ class SignUpPageAndroid:
         browser.element(SignUpPageLocatorsAndroid.EMAIL_INPUT).type(email)
         self._hide_keyboard()
 
-    def _click_email_next(self):
+    def click_email_next(self):
         browser.element(SignUpPageLocatorsAndroid.EMAIL_NEXT_BUTTON).click()
+
+    def is_email_next_button_disabled(self):
+        browser.element(SignUpPageLocatorsAndroid.EMAIL_NEXT_BUTTON).should(be.disabled)
 
     def fill_signup_step_email(self, email):
         self.fill_email(email)
-        self._click_email_next()
-        return self
+        self.click_email_next()
 
     def fill_password(self, password):
         browser.element(SignUpPageLocatorsAndroid.PASSWORD_INPUT).type(password)
         self._hide_keyboard()
 
-    def _click_password_next(self):
+    def click_password_next(self):
         browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).click()
+
+    def is_password_next_button_disabled(self):
+        browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).should(be.disabled)
 
     def fill_signup_step_password(self, password):
         self.fill_password(password)
-        self._click_password_next()
+        self.click_password_next()
 
     def _click_age_next(self):
         browser.element(SignUpPageLocatorsAndroid.AGE_NEXT_BUTTON).click()
@@ -70,11 +75,12 @@ class SignUpPageAndroid:
         browser.element(SignUpPageLocatorsAndroid.DECLINE_NOTIFICATION_BUTTON).click()
 
 
-    def search_and_select_artist(self, artist_name):
-        browser.element(SignUpPageLocatorsAndroid.SEARCH_FIELD).click()
-        browser.element(SignUpPageLocatorsAndroid.SEARCH_INPUT).type(artist_name)
-        self._hide_keyboard()
-        browser.element(SignUpPageLocatorsAndroid.FIRST_SUGGESTED_ARTIST).click()
+    def search_and_select_artist(self, artist_names):
+        for artist in artist_names:
+            browser.element(SignUpPageLocatorsAndroid.SEARCH_FIELD).click()
+            browser.element(SignUpPageLocatorsAndroid.SEARCH_INPUT).type(artist)
+            self._hide_keyboard()
+            browser.element(SignUpPageLocatorsAndroid.FIRST_SUGGESTED_ARTIST).click()
 
     def click_done(self):
         browser.element(SignUpPageLocatorsAndroid.DONE_BUTTON).click()

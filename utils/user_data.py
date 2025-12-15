@@ -76,7 +76,8 @@ def generate_test_user():
         'password': _generate_random_password(),
         'username': _generate_random_username(),
         'birthday': _generate_random_birthday(),
-        'gender': _generate_random_gender()
+        'gender': _generate_random_gender(),
+        'artists': ['System Of A Down', 'Sofia Isella', 'Noga Erez'],
     }
 
 INVALID_PASSWORDS = {
@@ -91,4 +92,3 @@ INVALID_BIRTHDAYS = {
     'invalid_year': {'day': '15', 'month': 'January', 'year': '90'},
     'missing_month': {'day': '15', 'month': None, 'year': '1990'},
 }
-ARTISTS = ['System Of A Down', 'Sofia Isella', 'Noga Erez']

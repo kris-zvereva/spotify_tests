@@ -1,8 +1,6 @@
 import allure
 from allure_commons._allure import step
 
-from utils.user_data import ARTISTS
-
 
 @allure.feature('User Registration')
 @allure.story('Sign up via Android app')
@@ -45,9 +43,7 @@ class TestSignUpAndroid:
             android_signup_page.decline_notifications()
 
         with step('Find and select the artists'):
-            android_signup_page.search_and_select_artist(ARTISTS[0])
-            android_signup_page.search_and_select_artist(ARTISTS[1])
-            android_signup_page.search_and_select_artist(ARTISTS[2])
+            android_signup_page.search_and_select_artist(test_user['artists'])
 
         with step('Click Done button'):
             android_signup_page.click_done()
