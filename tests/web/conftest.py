@@ -6,7 +6,7 @@ from selene import browser
 
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage
-from utils.user_data import generate_test_user
+from data.user_data import generate_test_user
 
 
 @pytest.fixture(scope='function', autouse=True)

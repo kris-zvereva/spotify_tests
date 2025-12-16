@@ -1,7 +1,7 @@
 import allure
 from allure_commons._allure import step
 
-from utils.user_data import INVALID_PASSWORDS, INVALID_BIRTHDAYS
+from data.user_data import INVALID_PASSWORDS, INVALID_BIRTHDAYS
 
 
 @allure.feature('User Registration')

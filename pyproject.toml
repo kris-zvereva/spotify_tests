@@ -14,6 +14,11 @@ selene = "^2.0.0rc4"
 faker = "^38.2.0"
 allure-python-commons = "^2.15.2"
 appium-python-client = "^5.2.4"
+jsonschema = "^4.25.1"
+pydantic = "^2.12.5"
+dotenv = "^0.9.9"
+pydantic-settings = "^2.12.0"
+python-dotenv = "^1.2.1"
 
 
 [build-system]

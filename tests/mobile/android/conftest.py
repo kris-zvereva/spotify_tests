@@ -5,7 +5,7 @@ from selene import browser
 
 from model.assertions.android_signup_assertions import SignUpAssertionsAndroid
 from model.pages.mobile.android.signup_page_android import SignUpPageAndroid
-from utils.user_data import generate_test_user
+from data.user_data import generate_test_user
 
 
 @pytest.fixture(scope='function')
