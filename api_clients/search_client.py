@@ -1,4 +1,7 @@
+from jsonschema.validators import validate
+
 from api_clients.base_client import SpotifyBaseClient
+from data.schema.get_track_id import GET_TRACK_ID
 
 
 class SearchClient(SpotifyBaseClient):
@@ -16,6 +19,7 @@ class SearchClient(SpotifyBaseClient):
         assert response.status_code == 200, f"Search failed: {response.text}"
 
         search_data = response.json()
+        validate(response, GET_TRACK_ID)
         tracks = search_data['tracks']['items']
 
         assert len(tracks) > 0, "No tracks found!"

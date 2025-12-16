@@ -52,10 +52,10 @@ class TestTrackInfo:
 
     @allure.title('Get track returns album information')
     @allure.description('Retrieve track by ID and verify album data is present')
-    def test_get_track_by_id_returns_album_info(self, tracks_client):
+    def test_get_track_by_id_returns_album_info(self, track_client):
         with step('Get track information'):
             track_data = TRACK_IDS['NOGA_EREZ_DUMB']
-            track_info = tracks_client.get_track_info_by_id(track_data['id'])
+            track_info = track_client.get_track_info_by_id(track_data['id'])
 
         with step('Verify album information'):
             assert 'album' in track_info
@@ -65,10 +65,10 @@ class TestTrackInfo:
 
     @allure.title('Get track returns explicit flag')
     @allure.description('Retrieve track by ID and verify explicit flag field exists')
-    def test_get_track_by_id_returns_explicit_flag(self, tracks_client):
+    def test_get_track_by_id_returns_explicit_flag(self, track_client):
         with step('Get non-explicit track information'):
             track_data = TRACK_IDS['NOGA_EREZ_DUMB']
-            track_info = tracks_client.get_track_info_by_id(track_data['id'])
+            track_info = track_client.get_track_info_by_id(track_data['id'])
 
         with step('Verify explicit flag is False'):
             assert 'explicit' in track_info
@@ -76,7 +76,7 @@ class TestTrackInfo:
 
         with step('Get explicit track information'):
             track_data = TRACK_IDS['SOFIA_ISELLA_DOLL']
-            track_info = tracks_client.get_track_info_by_id(track_data['id'])
+            track_info = track_client.get_track_info_by_id(track_data['id'])
 
         with step('Verify explicit flag is True'):
             assert 'explicit' in track_info

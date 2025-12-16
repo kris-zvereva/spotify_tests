@@ -1,6 +1,7 @@
 from jsonschema import validate
 
 from api_clients.base_client import SpotifyBaseClient
+from data.schema.get_track_info import GET_TRACK_INFO
 
 
 class TrackClient(SpotifyBaseClient):
@@ -31,8 +32,6 @@ class TrackClient(SpotifyBaseClient):
 
         assert response.status_code == 200, f"Failed to check track: {response.text}"
 
-        # TODO: validate response schema
-
         return response.json()[0]
 
     def delete_track_from_fav(self, track_id: str) -> bool:
@@ -61,7 +60,6 @@ class TrackClient(SpotifyBaseClient):
         assert response.status_code == 200, f"Failed to get track: {response.text}"
 
         data = response.json()
-
-        # TODO: validate response schema
+        validate(data, GET_TRACK_INFO)
 
         return data

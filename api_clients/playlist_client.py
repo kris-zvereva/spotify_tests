@@ -1,4 +1,7 @@
+from jsonschema.validators import validate
+
 from api_clients.base_client import SpotifyBaseClient
+from data.schema.get_playlist_items import GET_PLAYLIST_ITEMS
 
 
 class PlaylistClient(SpotifyBaseClient):
@@ -61,7 +64,7 @@ class PlaylistClient(SpotifyBaseClient):
         assert response.status_code == 200, f"Failed to get playlist items: {response.text}"
 
         data = response.json()
-
+        validate(data, GET_PLAYLIST_ITEMS)
         # TODO: validate response schema
 
         track_ids = [item['track']['id'] for item in data['items']]
