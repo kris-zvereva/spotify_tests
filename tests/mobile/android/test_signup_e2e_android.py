@@ -1,10 +1,10 @@
 import allure
-from allure_commons._allure import step
-
+from allure import step
 
 @allure.feature('User Registration')
 @allure.story('Sign up via Android app')
 @allure.label('layer', 'Mobile')
+@allure.severity(allure.severity_level.CRITICAL)
 @allure.tag('signup', 'android', 'smoke')
 class TestSignUpAndroid:
 
