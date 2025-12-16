@@ -4,6 +4,7 @@ from selene import browser, by, be
 
 from model.locators.web_signup_page_locators import SignUpPageLocators
 from selenium.webdriver.common.action_chains import ActionChains
+from config import settings
 
 
 class SignUpPage:
@@ -40,7 +41,7 @@ class SignUpPage:
         self._click_with_human_simulation(locator)
 
     def open_signup_page(self):
-        browser.open(SignUpPageLocators.SIGNUP_URL)
+        browser.open(settings.WEB_URL)
         browser.element(by.xpath(SignUpPageLocators.SIGNUP_BUTTON)).should(be.visible)
 
     def click_submit_button(self):
@@ -69,7 +70,7 @@ class SignUpPage:
         browser.element(by.xpath(SignUpPageLocators.PRIVACY_CHECKBOX)).click()
         self.click_submit_button()
 
-    def fill_partial_birthday(self, day=None, month=None, year=None):
+    def fill_partial_birthday(self, birthday_data):
         """
         Fill birthday fields partially for validation testing
         Args:
@@ -77,10 +78,10 @@ class SignUpPage:
             month: Month value (optional)
             year: Year value (optional)
         """
-        if day:
-            browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(day)
-        if month:
-            browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(month)
-        if year:
-            browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(year)
+        if birthday_data.get('day'):
+            browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(birthday_data['day'])
+        if birthday_data.get('month'):
+            browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(birthday_data['month'])
+        if birthday_data.get('year'):
+            browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(birthday_data['year'])
         self.click_submit_button()

@@ -1,11 +1,11 @@
 import allure
-from allure_commons._allure import step
-from api_clients.playlist_client import PlaylistClient
+from allure import step
 from data.user_data import PLAYLIST_INFO, TRACK_IDS
 
 
 @allure.feature('Playlists')
 @allure.story('Create and manage playlists')
+@allure.severity(allure.severity_level.NORMAL)
 @allure.label('layer', 'API')
 @allure.tag('playlists', 'api')
 class TestPlaylist:

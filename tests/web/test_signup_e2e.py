@@ -1,10 +1,10 @@
 import allure
-from allure_commons._allure import step
-
+from allure import step
 
 
 @allure.feature('User Registration')
 @allure.story('Sign up via web UI')
+@allure.severity(allure.severity_level.CRITICAL)
 @allure.label('layer', 'UI')
 @allure.tag('signup', 'web', 'smoke')
 class TestSignUp:
@@ -32,5 +32,3 @@ class TestSignUp:
 
             with step(f'Verify successful signup for user: {test_user["username"]}'):
                 assert_signup.verify_successful_signup(test_user['username'])
-
-                # todo linter подключить вычистить

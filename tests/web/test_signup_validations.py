@@ -1,5 +1,5 @@
 import allure
-from allure_commons._allure import step
+from allure import step
 
 from data.user_data import INVALID_PASSWORDS, INVALID_BIRTHDAYS
 
@@ -7,6 +7,7 @@ from data.user_data import INVALID_PASSWORDS, INVALID_BIRTHDAYS
 @allure.feature('User Registration')
 @allure.story('Form validation')
 @allure.label('layer', 'UI')
+@allure.severity(allure.severity_level.NORMAL)
 @allure.tag('signup', 'web')
 class TestSignUpValidation:
 

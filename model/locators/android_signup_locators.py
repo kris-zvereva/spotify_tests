@@ -48,7 +48,7 @@ class SignUpPageLocatorsAndroid:
     )
     CREATE_ACCOUNT_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/name_next_button')
     DECLINE_NOTIFICATION_BUTTON = (AppiumBy.ID, 'com.spotify.music:id/decline')
-    #account created, need to select min 3 artists
+
     SEARCH_FIELD = (AppiumBy.ID, 'com.spotify.music:id/search_field_root')
     SEARCH_INPUT = (AppiumBy.ID, 'com.spotify.music:id/query')
     ARTIST_BY_NAME_TEMPLATE = 'new UiSelector().text("{}")'

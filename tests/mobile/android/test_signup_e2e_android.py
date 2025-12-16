@@ -53,11 +53,3 @@ class TestSignUpAndroid:
 
         with step('Verify the account button is displayed'):
             assert_signup.verify_profile_button_visible()
-
-
-"""
-tests todo:
-1 e2e до кнопки сеттингов
-2 проверка обязательности юзернейма
-3 проверка ошибки пароля (мб покопаться в текстовках и сделать сложный тест)
-"""

@@ -1,10 +1,11 @@
 import allure
-from allure_commons._allure import step
+from allure import step
 from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 
 
 @allure.feature('Tracks')
 @allure.story('Manage favorite tracks')
+@allure.severity(allure.severity_level.NORMAL)
 @allure.label('layer', 'API')
 @allure.tag('tracks', 'favorites', 'api')
 class TestTracksManagement:
@@ -45,6 +46,7 @@ class TestTracksManagement:
 @allure.feature('Tracks')
 @allure.story('Get track information')
 @allure.label('layer', 'API')
+@allure.severity(allure.severity_level.NORMAL)
 @allure.tag('tracks', 'info', 'api')
 class TestTrackInfo:
 

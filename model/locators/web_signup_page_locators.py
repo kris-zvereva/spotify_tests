@@ -1,5 +1,4 @@
 class SignUpPageLocators:
-    SIGNUP_URL = "https://open.spotify.com/"  # TODO вынести куда-нибудь
     SIGNUP_BUTTON = '//button[@data-testid="signup-button"]'
     SUBMIT_BUTTON = '//button[@data-testid="submit"]'
 

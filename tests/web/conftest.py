@@ -1,4 +1,8 @@
+import os
+
+import allure
 import pytest
+from dotenv import load_dotenv
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -7,7 +11,9 @@ from selene import browser
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage
 from data.user_data import generate_test_user
+from utils.allure_attach import add_screenshot, attach_bstack_video
 
+load_dotenv()
 
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser():
@@ -21,7 +27,18 @@ def setup_browser():
         'intl.accept_languages': 'en-US,en'
     })
 
-    driver = webdriver.Chrome(options=options)
+    # Remote or local driver
+    remote_url = os.getenv('web_remote_url')
+
+    if remote_url:
+        # Remote driver (BrowserStack)
+        driver = webdriver.Remote(
+            command_executor=remote_url,
+            options=options
+        )
+    else:
+
+        driver = webdriver.Chrome(options=options)
 
     browser.config.driver = driver
     browser.config.window_width = 1920
@@ -30,18 +47,42 @@ def setup_browser():
 
     yield browser
 
+    # Allure attachments
+    add_screenshot(browser)
+
+    allure.attach(
+        browser.driver.page_source,
+        name='Page source',
+        attachment_type=allure.attachment_type.HTML
+    )
+
+    allure.attach(
+        str(browser.driver.get_log('browser')),
+        name='Browser logs',
+        attachment_type=allure.attachment_type.TEXT
+    )
+
+    # BrowserStack video (if remote)
+    if hasattr(browser.driver, 'session_id'):
+        bstack_username = os.getenv('browserstack_username')
+        bstack_access_key = os.getenv('browserstack_access_key')
+
+        if bstack_username and bstack_access_key:
+            attach_bstack_video(
+                browser.driver.session_id,
+                bstack_username,
+                bstack_access_key
+            )
+
     browser.quit()
-    # TODO attach allure
 
 @pytest.fixture
 def signup_page():
-    """Returns SignUpPage instance"""
     return SignUpPage()
 
 @pytest.fixture(scope='session')
 def assert_signup():
     return SignUpAssertions()
-
 
 @pytest.fixture
 def test_user():
