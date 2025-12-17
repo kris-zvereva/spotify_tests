@@ -1,4 +1,6 @@
 import os
+import sys
+from pathlib import Path
 
 import allure
 import pytest
@@ -7,6 +9,8 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import browser
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage
@@ -20,6 +24,7 @@ def setup_browser():
     options = Options()
     # disables anti-bot protection
     options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument('--disable-gpu')
 
     # english locale
     options.add_argument('--lang=en-US')
@@ -54,12 +59,6 @@ def setup_browser():
         browser.driver.page_source,
         name='Page source',
         attachment_type=allure.attachment_type.HTML
-    )
-
-    allure.attach(
-        str(browser.driver.get_log('browser')),
-        name='Browser logs',
-        attachment_type=allure.attachment_type.TEXT
     )
 
     # BrowserStack video (if remote)

@@ -40,4 +40,4 @@ class SignUpErrorLocators:
     BIRTHDAY_ERROR_MESSAGE = '//div[@id="birthdate-error-invalid"]//span'
     BIRTHDAY_DAY_ERROR_MESSAGE = '//div[@id="birthdate-error-day_invalid"]//span'
     BIRTHDAY_MONTH_ERROR_MESSAGE = '//div[@id="birthdate-error-month_invalid"]//span'
-    BIRTHDAY_YEAR_ERROR_MESSAGE = '//div[@id="birthdate-error-year_invalid"]//span'
+    BIRTHDAY_YEAR_ERROR_MESSAGE = '(//div[@id="birthdate-error-year_below_1900"]//span)[2]'
