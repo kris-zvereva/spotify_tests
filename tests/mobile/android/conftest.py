@@ -1,8 +1,12 @@
+import sys
+from pathlib import Path
+
 import pytest
 import allure
-import os
 from appium import webdriver
 from selene import browser
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from model.assertions.android_signup_assertions import SignUpAssertionsAndroid
 from model.pages.mobile.android.signup_page_android import SignUpPageAndroid
@@ -42,7 +46,7 @@ def android_driver():
                 bstack_username,
                 bstack_access_key
             )
-
+    driver.execute_script('mobile: clearApp', {'appId': 'com.spotify.music'})
     driver.quit()
 
 @pytest.fixture

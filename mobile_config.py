@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Literal, Optional
 from appium.options.android import UiAutomator2Options
@@ -35,7 +37,10 @@ class MobileConfig(BaseSettings):
     bstack_session: str = 'Signup_Flow'
 
     model_config = SettingsConfigDict(
-        env_file=('.env', f'.env.mobile.{os.getenv("MOBILE_CONTEXT", "local")}'),
+        env_file=(
+            Path(__file__).parent / '.env',
+            Path(__file__).parent / '.env.mobile.local'
+        ),
         env_file_encoding='utf-8',
         env_prefix='MOBILE_',
         case_sensitive=False,
@@ -55,7 +60,8 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     options.app_activity = config.app_activity
 
     if config.context == 'local':
-        options.app = os.path.abspath(config.app)
+        app_path = Path(__file__).parent / config.app
+        options.app = str(app_path.absolute())
         options.no_reset = config.no_reset
 
     elif config.context == 'remote':

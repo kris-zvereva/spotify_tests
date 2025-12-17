@@ -4,8 +4,8 @@ from allure import step
 @allure.feature('User Registration')
 @allure.story('Sign up via Android app')
 @allure.label('layer', 'Mobile')
-@allure.severity(allure.severity_level.CRITICAL)
-@allure.tag('signup', 'android', 'smoke')
+@allure.severity(allure.severity_level.NORMAL)
+@allure.tag('signup', 'android')
 class TestSignUpValidationsAndroid:
 
     @allure.title('Email field is required for registration')
@@ -20,8 +20,8 @@ class TestSignUpValidationsAndroid:
         with step('Skip email and verify the next button is disabled'):
             android_signup_page.is_email_next_button_disabled()
 
-            with step('Verify the error is displayed'):
-                assert_signup.verify_email_error_displayed()
+            with step('Verify the hint is displayed'):
+                assert_signup.verify_email_hint_displayed()
 
 
     @allure.title('Password field is required for registration')
@@ -39,5 +39,5 @@ class TestSignUpValidationsAndroid:
         with step('Skip password and and verify the next button is disabled'):
             android_signup_page.is_password_next_button_disabled()
 
-            with step('Verify the error is displayed'):
-                assert_signup.verify_password_error_displayed()
+            with step('Verify the hint is displayed'):
+                assert_signup.verify_password_hint_displayed()
