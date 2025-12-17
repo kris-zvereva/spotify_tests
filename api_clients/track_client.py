@@ -1,6 +1,8 @@
 from jsonschema import validate
 
 from api_clients.base_client import SpotifyBaseClient
+from data.schema.add_track import ADD_TRACK
+from data.schema.delete_track import DELETE_TRACK
 from data.schema.get_track_info import GET_TRACK_INFO
 
 
@@ -14,10 +16,10 @@ class TrackClient(SpotifyBaseClient):
         Returns:  True if added
         """
         self.logger.info(f"Adding track {track_id} to favorites")
-        response = self._put('/me/tracks', json={'ids': [track_id]})
+        request_body = {'ids': [track_id]}
+        validate(instance=request_body, schema=ADD_TRACK)
 
-        # TODO: validate request schema
-        # TODO: validate response schema
+        response = self._put('/me/tracks', json=request_body)
 
         return response.status_code == 200
 
@@ -30,8 +32,7 @@ class TrackClient(SpotifyBaseClient):
         self.logger.info(f"Checking if track {track_id} is saved")
         response = self._get('/me/tracks/contains', params={'ids': track_id})
 
-        assert response.status_code == 200, f"Failed to check track: {response.text}"
-
+        assert response.status_code == 200
         return response.json()[0]
 
     def delete_track_from_fav(self, track_id: str) -> bool:
@@ -41,10 +42,10 @@ class TrackClient(SpotifyBaseClient):
         Returns: True if successfully deleted
         """
         self.logger.info(f"Deleting track {track_id} from favorites")
-        response = self._delete('/me/tracks', json={'ids': [track_id]})
+        request_body = {'ids': [track_id]}
+        validate(instance=request_body, schema=DELETE_TRACK)
 
-        # TODO: validate request schema
-        # TODO: validate response schema
+        response = self._delete('/me/tracks', json={'ids': [track_id]})
 
         return response.status_code == 200
 
@@ -57,9 +58,9 @@ class TrackClient(SpotifyBaseClient):
         self.logger.info(f"Getting track info for {track_id}")
         response = self._get(f'/tracks/{track_id}')
 
-        assert response.status_code == 200, f"Failed to get track: {response.text}"
+        assert response.status_code == 200
 
         data = response.json()
-        validate(data, GET_TRACK_INFO)
+        validate(instance=data, schema=GET_TRACK_INFO)
 
         return data

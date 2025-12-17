@@ -1,0 +1,14 @@
+ADD_TRACK = {
+  "type": "object",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "ids"
+  ]
+}

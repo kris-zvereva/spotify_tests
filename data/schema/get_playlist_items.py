@@ -1,5 +1,4 @@
 GET_PLAYLIST_ITEMS = {
-  "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
     "href": {

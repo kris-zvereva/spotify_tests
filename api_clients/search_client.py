@@ -19,12 +19,10 @@ class SearchClient(SpotifyBaseClient):
         assert response.status_code == 200, f"Search failed: {response.text}"
 
         search_data = response.json()
-        validate(response, GET_TRACK_ID)
+        validate(instance=search_data, schema=GET_TRACK_ID)
         tracks = search_data['tracks']['items']
 
         assert len(tracks) > 0, "No tracks found!"
-
-        # TODO: validate response schema
 
         track_id = tracks[0]['id']
         self.logger.info(f"Found track ID: {track_id}")

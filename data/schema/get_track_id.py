@@ -1,5 +1,4 @@
 GET_TRACK_ID = {
-  "$schema": "http://json-schema.org/schema#",
   "type": "object",
   "properties": {
     "tracks": {
