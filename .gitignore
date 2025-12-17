@@ -1,5 +1,5 @@
 # Environment variables
-.env
+.env.api
 .env.local
 .env.*.local
 .env.*.bstack

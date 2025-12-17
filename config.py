@@ -8,6 +8,9 @@ class Config:
     API_BASE_URL: str = 'https://api.spotify.com/v1'  # For API requests
     WEB_URL: str = 'https://open.spotify.com'
 
+    # BrowserStack
+    BROWSERSTACK_URL: str = 'https://hub-cloud.browserstack.com/wd/hub'
+
     # Browser settings
     driver_name: str = 'chrome'
     timeout: int = 10

@@ -12,6 +12,7 @@ from selene import browser
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
+from config import settings
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage
 from data.user_data import generate_test_user
@@ -32,17 +33,23 @@ def setup_browser():
         'intl.accept_languages': 'en-US,en'
     })
 
-    # Remote or local driver
-    remote_url = os.getenv('web_remote_url')
+    context = os.getenv('WEB_CONTEXT', 'local')
 
-    if remote_url:
-        # Remote driver (BrowserStack)
+    if context == 'remote':
+        print("🌐 Running on BrowserStack")
+        options.set_capability('bstack:options', {
+            'projectName': 'Spotify_Web_Tests',
+            'buildName': 'Web_Signup_Tests',
+            'userName': os.getenv('browserstack_username'),
+            'accessKey': os.getenv('browserstack_access_key'),
+        })
+
         driver = webdriver.Remote(
-            command_executor=remote_url,
+            command_executor=settings.BROWSERSTACK_URL,
             options=options
         )
     else:
-
+        print("💻 Running locally")
         driver = webdriver.Chrome(options=options)
 
     browser.config.driver = driver
