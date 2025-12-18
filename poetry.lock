@@ -344,18 +344,6 @@ files = [
 ]
 
 [[package]]
-name = "genson"
-version = "1.3.0"
-description = "GenSON is a powerful, user-friendly JSON Schema generator."
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "genson-1.3.0-py3-none-any.whl", hash = "sha256:468feccd00274cc7e4c09e84b08704270ba8d95232aa280f65b986139cec67f7"},
-    {file = "genson-1.3.0.tar.gz", hash = "sha256:e02db9ac2e3fd29e65b5286f7135762e2cd8a986537c075b06fc5f1517308e37"},
-]
-
-[[package]]
 name = "h11"
 version = "0.16.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -1089,4 +1077,4 @@ h11 = ">=0.16.0,<1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "edae2626ea6f189619b2b554d9b7742247669f6f1295d144f29c28e20feb1b4a"
+content-hash = "5799d2f754d4ac2611162511a54e3c43aabbf06e953637f8f50a09fcdf665905"
