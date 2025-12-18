@@ -36,7 +36,6 @@ def setup_browser():
     context = os.getenv('WEB_CONTEXT', 'local')
 
     if context == 'remote':
-        print("🌐 Running on BrowserStack")
         options.set_capability('bstack:options', {
             'projectName': 'Spotify_Web_Tests',
             'buildName': 'Web_Signup_Tests',
@@ -49,7 +48,6 @@ def setup_browser():
             options=options
         )
     else:
-        print("💻 Running locally")
         driver = webdriver.Chrome(options=options)
 
     browser.config.driver = driver

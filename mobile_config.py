@@ -1,20 +1,20 @@
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import Literal, Optional
 from appium.options.android import UiAutomator2Options
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class MobileConfig(BaseSettings):
     """Mobile test configuration"""
 
-    context: Literal['local', 'remote'] = 'local'
-
-    # Appium/BrowserStack URL
     remote_url: str
 
-    # Common Android capabilities
+    # Android capabilities
     platform_name: str = 'Android'
     platform_version: str
     device_name: str
@@ -23,24 +23,18 @@ class MobileConfig(BaseSettings):
     # Spotify app
     app_package: str = 'com.spotify.music'
     app_activity: str = '.MainActivity'
-    app: str  # Путь или bs://id
+    app: str  # Путь к APK или bs://id
 
     # Settings
     no_reset: bool = True
     timeout: int = 20
 
     # BrowserStack specific
-    bstack_username: Optional[str] = None
-    bstack_access_key: Optional[str] = None
     bstack_project: str = 'Spotify_Mobile_Tests'
     bstack_build: str = 'Android_Signup'
-    bstack_session: str = 'Signup_Flow'
 
     model_config = SettingsConfigDict(
-        env_file=(
-            Path(__file__).parent / '.env',
-            Path(__file__).parent / '.env.mobile.local'
-        ),
+        env_file=('.env.mobile.bstack', '.env.mobile.local'),
         env_file_encoding='utf-8',
         env_prefix='MOBILE_',
         case_sensitive=False,
@@ -59,22 +53,33 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     options.app_package = config.app_package
     options.app_activity = config.app_activity
 
-    if config.context == 'local':
+    context = os.getenv('MOBILE_CONTEXT', 'local')
+    print(f"🔍 DEBUG: MOBILE_CONTEXT={context}")
+    print(f"🔍 DEBUG: config.app={config.app}")
+    print(f"🔍 DEBUG: config.remote_url={config.remote_url}")
+
+    # BrowserStack capabilities if remote
+    context = os.getenv('MOBILE_CONTEXT', 'local')
+    if context == 'remote':
+        print("📱 Running on BrowserStack")
+        options.app = config.app
+        options.set_capability('bstack:options', {
+            'projectName': config.bstack_project,
+            'buildName': config.bstack_build,
+            'userName': os.getenv('browserstack_username'),
+            'accessKey': os.getenv('browserstack_access_key'),
+        })
+    else:
+        print("💻 Running locally")
         app_path = Path(__file__).parent / config.app
         options.app = str(app_path.absolute())
         options.no_reset = config.no_reset
 
-    elif config.context == 'remote':
-        options.app = config.app  # bs://...
-        options.set_capability('bstack:options', {
-            'projectName': config.bstack_project,
-            'buildName': config.bstack_build,
-            'sessionName': config.bstack_session,
-            'userName': config.bstack_username,
-            'accessKey': config.bstack_access_key,
-        })
-
     return options
 
 
-mobile_settings = MobileConfig()
+context = os.getenv('MOBILE_CONTEXT', 'local')
+if context == 'remote':
+    mobile_settings = MobileConfig(_env_file='.env.mobile.bstack')
+else:
+    mobile_settings = MobileConfig(_env_file='.env.mobile.local')

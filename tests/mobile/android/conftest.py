@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-
+import os
 import pytest
 import allure
 from appium import webdriver
@@ -19,15 +19,27 @@ from mobile_config import mobile_settings, to_driver_options
 def android_driver():
     """Setup Android driver (local or remote)"""
     options = to_driver_options(mobile_settings)
-    driver = webdriver.Remote(mobile_settings.remote_url, options=options)
+
+    context = os.getenv('MOBILE_CONTEXT', 'local')
+    if context == 'remote':
+        username = os.getenv('browserstack_username')
+        accesskey = os.getenv('browserstack_access_key')
+        remote_url = f"https://{username}:{accesskey}@hub-cloud.browserstack.com/wd/hub"
+    else:
+        remote_url = mobile_settings.remote_url  # http://127.0.0.1:4723
+
+    driver = webdriver.Remote(remote_url, options=options)
 
     browser.config.driver = driver
     browser.config.timeout = mobile_settings.timeout
 
     yield driver
 
-    # Allure attachments
-    add_screenshot(browser)
+    # Allure attachments (spotify doesnt allow screenshots in some signup forms)
+    try:
+        add_screenshot(browser)
+    except Exception as e:
+        print(f"Screenshot failed: {e}")
 
     allure.attach(
         driver.page_source,
@@ -35,19 +47,19 @@ def android_driver():
         attachment_type=allure.attachment_type.XML
     )
 
-    # BrowserStack video (if remote)
-    if mobile_settings.context == 'remote' and hasattr(driver, 'session_id'):
-        bstack_username = mobile_settings.bstack_username
-        bstack_access_key = mobile_settings.bstack_access_key
+    # BrowserStack video
+    context = os.getenv('MOBILE_CONTEXT', 'local')
+    if context == 'remote':
+        attach_bstack_video(
+            driver.session_id,
+            os.getenv('browserstack_username'),
+            os.getenv('browserstack_access_key')
+        )
 
-        if bstack_username and bstack_access_key:
-            attach_bstack_video(
-                driver.session_id,
-                bstack_username,
-                bstack_access_key
-            )
+
     driver.execute_script('mobile: clearApp', {'appId': 'com.spotify.music'})
     driver.quit()
+
 
 @pytest.fixture
 def android_signup_page(android_driver):
