@@ -97,7 +97,7 @@ def user_auth_token(setup_browser):
 
     browser.open('/authorize?' + urlencode(auth_params))
 
-    # Login flow
+    # UI login flow: spotify doesn't allow to retrieve token from api, so this is the only way
     browser.element('//input[@id="username"]').type(user_mail)
     browser.element('//button[@data-testid="login-button"]').click()
 
