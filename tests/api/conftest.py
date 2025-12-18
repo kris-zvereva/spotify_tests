@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-from selenium.common import NoSuchElementException, TimeoutException
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
@@ -21,7 +20,8 @@ from api_clients.search_client import SearchClient
 from api_clients.track_client import TrackClient
 from config import settings
 
-load_dotenv()
+env_path = Path(__file__).parent.parent.parent / '.env.api'
+load_dotenv(env_path)
 
 # Configure logging
 logging.basicConfig(
@@ -68,7 +68,6 @@ def setup_browser():
     browser.config.base_url = settings.OAUTH_URL
     browser.config.driver_name = settings.driver_name
     browser.config.timeout = settings.timeout
-    browser.config.driver_options = webdriver.ChromeOptions()
 
     # Chrome options для Jenkins (headless)
     options = webdriver.ChromeOptions()
