@@ -3,27 +3,29 @@ from allure_commons.types import AttachmentType
 import allure
 
 
-def attach_bstack_video(session_id: str, bstack_username: str, bstack_access_key: str):
-    """Получает ссылку на видео из BrowserStack и прикрепляет к Allure отчету"""
-    bstack_session_url = f'https://api.browserstack.com/app-automate/sessions/{session_id}.json'
+def attach_bstack_video(session_id, username, access_key, is_mobile=False):
+    """Attach BrowserStack video to Allure report"""
+    import requests
+    import time
+
+    time.sleep(5)  # Ждём пока видео сгенерируется
+
+    # Разные API для web и mobile
+    if is_mobile:
+        api_url = f'https://api.browserstack.com/app-automate/sessions/{session_id}.json'
+    else:
+        api_url = f'https://api.browserstack.com/automate/sessions/{session_id}.json'
 
     try:
-        response = requests.get(
-            bstack_session_url,
-            auth=(bstack_username, bstack_access_key),
-            timeout=10
-        )
+        response = requests.get(api_url, auth=(username, access_key))
         response.raise_for_status()
+        video_url = response.json()['automation_session']['video_url']
 
-        session_data = response.json()
-        video_url = session_data.get('automation_session', {}).get('video_url')
-
-        if video_url:
-            allure.attach(
-                body=f'<a href="{video_url}">BrowserStack Video</a>',
-                name='Test Video',
-                attachment_type=AttachmentType.HTML
-            )
+        allure.attach(
+            f'<a href="{video_url}">BrowserStack Video</a>',
+            name='Video',
+            attachment_type=allure.attachment_type.HTML
+        )
     except requests.exceptions.RequestException as e:
         print(f"Failed to get BrowserStack video: {e}")
 

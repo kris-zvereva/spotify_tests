@@ -33,7 +33,7 @@ def setup_browser():
         'intl.accept_languages': 'en-US,en'
     })
 
-    context = os.getenv('WEB_CONTEXT', 'local')
+    context = os.getenv('WEB_CONTEXT', 'remote')
 
     if context == 'remote':
         options.set_capability('bstack:options', {

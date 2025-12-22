@@ -53,15 +53,9 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     options.app_package = config.app_package
     options.app_activity = config.app_activity
 
-    context = os.getenv('MOBILE_CONTEXT', 'local')
-    print(f"🔍 DEBUG: MOBILE_CONTEXT={context}")
-    print(f"🔍 DEBUG: config.app={config.app}")
-    print(f"🔍 DEBUG: config.remote_url={config.remote_url}")
-
     # BrowserStack capabilities if remote
-    context = os.getenv('MOBILE_CONTEXT', 'local')
+    context = os.getenv('MOBILE_CONTEXT', 'remote')
     if context == 'remote':
-        print("📱 Running on BrowserStack")
         options.app = config.app
         options.set_capability('bstack:options', {
             'projectName': config.bstack_project,
@@ -70,7 +64,6 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
             'accessKey': os.getenv('browserstack_access_key'),
         })
     else:
-        print("💻 Running locally")
         app_path = Path(__file__).parent / config.app
         options.app = str(app_path.absolute())
         options.no_reset = config.no_reset
@@ -78,7 +71,7 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     return options
 
 
-context = os.getenv('MOBILE_CONTEXT', 'local')
+context = os.getenv('MOBILE_CONTEXT', 'remote')
 if context == 'remote':
     mobile_settings = MobileConfig(_env_file='.env.mobile.bstack')
 else:
