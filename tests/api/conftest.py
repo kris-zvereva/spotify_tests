@@ -74,7 +74,12 @@ def setup_browser():
 
     yield
 
-    browser.quit()
+    #browser.quit()
+    try:
+        if hasattr(browser, 'driver') and browser.driver:
+            browser.quit()
+    except Exception as e:
+        print(f"Browser cleanup error (can be ignored): {e}")
 
 
 def get_random_test_account():

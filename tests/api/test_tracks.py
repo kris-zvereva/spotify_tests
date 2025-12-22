@@ -1,5 +1,4 @@
 import allure
-import pytest
 from allure import step
 from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 
