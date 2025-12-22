@@ -12,7 +12,14 @@ class SignUpPage:
     def _click_with_human_simulation(self, locator):
         """disables anti-bot protection"""
         element = browser.element(by.xpath(locator))
-
+        # Закрыть cookie баннер если есть
+        try:
+            cookie_banner = browser.element('//button[@id="onetrust-accept-btn-handler"]')
+            if cookie_banner.matching(be.visible):
+                cookie_banner.click()
+                time.sleep(0.3)
+        except:
+            pass
         browser.driver.execute_script("arguments[0].scrollIntoView(true);", element())
         time.sleep(0.2)
 
