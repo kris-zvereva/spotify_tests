@@ -9,7 +9,7 @@ from data.user_data import PLAYLIST_INFO, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label('layer', 'API')
 @allure.tag('playlists', 'api')
-@pytest.mark.skip("Requires local OAuth")
+
 class TestPlaylist:
 
     @allure.title('Create playlist and add tracks')

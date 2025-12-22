@@ -8,6 +8,7 @@ class SignUpAssertions:
     def verify_successful_signup(self, username):
         browser.element(by.xpath(SignUpPageLocators.USER_ACCOUNT_BUTTON)).should(
             have.attribute('aria-label').value(username))
+
     def verify_email_error(self):
         browser.element(by.xpath(SignUpErrorLocators.EMAIL_ERROR_MESSAGE)).should(
             have.text(ErrorMessages.EMPTY_EMAIL_ERROR.value))
