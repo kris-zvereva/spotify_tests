@@ -48,7 +48,6 @@ def android_driver():
     )
 
     # BrowserStack video
-    context = os.getenv('MOBILE_CONTEXT', 'local')
     if context == 'remote':
         attach_bstack_video(
             driver.session_id,
