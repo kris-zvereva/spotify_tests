@@ -1,12 +1,8 @@
-import sys
-from pathlib import Path
 import os
 import pytest
 import allure
 from appium import webdriver
 from selene import browser
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from model.assertions.android_signup_assertions import SignUpAssertionsAndroid
 from model.pages.mobile.android.signup_page_android import SignUpPageAndroid

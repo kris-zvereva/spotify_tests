@@ -10,8 +10,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import browser
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-
 from config import settings
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage

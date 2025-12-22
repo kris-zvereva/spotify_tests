@@ -1,13 +1,8 @@
-import sys
 from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
 import os
 import random
 import time
 import base64
-import logging
 from urllib.parse import urlencode
 import requests
 import pytest
@@ -20,8 +15,8 @@ from api_clients.search_client import SearchClient
 from api_clients.track_client import TrackClient
 from config import settings
 
-env_path = Path(__file__).parent.parent.parent / '.env.api'
-load_dotenv(env_path)
+
+load_dotenv('.env.api')
 
 
 @pytest.fixture(scope='session')
