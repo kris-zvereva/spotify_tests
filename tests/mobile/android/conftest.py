@@ -53,7 +53,8 @@ def android_driver():
         attach_bstack_video(
             driver.session_id,
             os.getenv('browserstack_username'),
-            os.getenv('browserstack_access_key')
+            os.getenv('browserstack_access_key'),
+            is_mobile=True,
         )
 
 
