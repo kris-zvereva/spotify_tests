@@ -1,4 +1,5 @@
 import allure
+import pytest
 from allure import step
 
 
@@ -7,6 +8,8 @@ from allure import step
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.label('layer', 'UI')
 @allure.tag('signup', 'web', 'smoke')
+@pytest.mark.skip(reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). "
+                         "Passes locally but fails in headless CI environment")
 class TestSignUp:
 
     @allure.title('Successful user registration via web form')

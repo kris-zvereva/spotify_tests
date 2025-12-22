@@ -9,6 +9,8 @@ from data.user_data import PLAYLIST_INFO, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label('layer', 'API')
 @allure.tag('playlists', 'api')
+@pytest.mark.skip(reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). "
+                         "Passes locally but fails in headless CI environment")
 
 class TestPlaylist:
 
