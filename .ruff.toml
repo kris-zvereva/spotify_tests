@@ -1,0 +1,8 @@
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (unused imports)
+    "I",   # isort (сортировка импортов)
+]
+ignore = ["E501"]  # игнорируем длинные строки

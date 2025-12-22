@@ -1,6 +1,7 @@
-import requests
 import logging
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
+import requests
 
 from config import settings
 
@@ -19,11 +20,11 @@ class SpotifyBaseClient:
         self.logger = logging.getLogger(self.__class__.__name__)
 
     def _make_request(
-            self,
-            method: str,
-            endpoint: str,
-            params: Optional[Dict[str, Any]] = None,
-            json: Optional[Dict[str, Any]] = None
+        self,
+        method: str,
+        endpoint: str,
+        params: Optional[Dict[str, Any]] = None,
+        json: Optional[Dict[str, Any]] = None,
     ) -> requests.Response:
         """
         Execute HTTP request
@@ -45,11 +46,7 @@ class SpotifyBaseClient:
             self.logger.debug(f"Body: {json}")
 
         response = requests.request(
-            method=method,
-            url=url,
-            headers=self.headers,
-            params=params,
-            json=json
+            method=method, url=url, headers=self.headers, params=params, json=json
         )
 
         self.logger.info(f"Response status: {response.status_code}")
@@ -57,18 +54,26 @@ class SpotifyBaseClient:
 
         return response
 
-    def _get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def _get(
+        self, endpoint: str, params: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """Execute GET request"""
-        return self._make_request('GET', endpoint, params=params)
+        return self._make_request("GET", endpoint, params=params)
 
-    def _post(self, endpoint: str, json: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def _post(
+        self, endpoint: str, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """Execute POST request"""
-        return self._make_request('POST', endpoint, json=json)
+        return self._make_request("POST", endpoint, json=json)
 
-    def _put(self, endpoint: str, json: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def _put(
+        self, endpoint: str, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """Execute PUT request"""
-        return self._make_request('PUT', endpoint, json=json)
+        return self._make_request("PUT", endpoint, json=json)
 
-    def _delete(self, endpoint: str, json: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def _delete(
+        self, endpoint: str, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """Execute DELETE request"""
-        return self._make_request('DELETE', endpoint, json=json)
+        return self._make_request("DELETE", endpoint, json=json)

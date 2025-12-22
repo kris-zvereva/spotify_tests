@@ -1,5 +1,6 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from selene import browser, query, be
+from selene import be, browser
+
 from model.locators.android_signup_locators import SignUpPageLocatorsAndroid
 
 
@@ -10,7 +11,7 @@ class SignUpPageAndroid:
         """Hide keyboard if visible"""
         try:
             browser.driver.hide_keyboard()
-        except:
+        except Exception:
             pass
 
     def click_signup_button(self):
@@ -41,7 +42,9 @@ class SignUpPageAndroid:
         browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).click()
 
     def is_password_next_button_disabled(self):
-        browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).should(be.disabled)
+        browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).should(
+            be.disabled
+        )
 
     def fill_signup_step_password(self, password):
         self.fill_password(password)
@@ -74,7 +77,6 @@ class SignUpPageAndroid:
     def decline_notifications(self):
         browser.element(SignUpPageLocatorsAndroid.DECLINE_NOTIFICATION_BUTTON).click()
 
-
     def search_and_select_artist(self, artist_names):
         for artist in artist_names:
             browser.element(SignUpPageLocatorsAndroid.SEARCH_FIELD).click()
@@ -88,7 +90,6 @@ class SignUpPageAndroid:
 
     def click_not_now(self):
         browser.element(SignUpPageLocatorsAndroid.NOT_NOW_BUTTON).click()
-
 
     def _fill_birthday_year(self, birthday_dict, max_attempts: int = 10):
         driver = browser.driver

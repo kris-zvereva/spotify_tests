@@ -1,24 +1,25 @@
 import time
 
-from selene import browser, by, be
-
-from model.locators.web_signup_page_locators import SignUpPageLocators
+from selene import be, browser, by
 from selenium.webdriver.common.action_chains import ActionChains
+
 from config import settings
+from model.locators.web_signup_page_locators import SignUpPageLocators
 
 
 class SignUpPage:
-
     def _click_with_human_simulation(self, locator):
         """disables anti-bot protection"""
         element = browser.element(by.xpath(locator))
         # Закрыть cookie баннер если есть
         try:
-            cookie_banner = browser.element('//button[@id="onetrust-accept-btn-handler"]')
+            cookie_banner = browser.element(
+                '//button[@id="onetrust-accept-btn-handler"]'
+            )
             if cookie_banner.matching(be.visible):
                 cookie_banner.click()
                 time.sleep(0.3)
-        except:
+        except Exception:
             pass
         browser.driver.execute_script("arguments[0].scrollIntoView(true);", element())
         time.sleep(0.2)
@@ -39,9 +40,13 @@ class SignUpPage:
         browser.element(by.xpath(SignUpPageLocators.USERNAME_INPUT)).type(username)
 
     def _fill_birthday(self, user_bd):
-        browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(user_bd['day'])
-        browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(user_bd['month'])
-        browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(user_bd['year'])
+        browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(user_bd["day"])
+        browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(
+            user_bd["month"]
+        )
+        browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(
+            user_bd["year"]
+        )
 
     def _fill_gender(self, user_gender):
         locator = SignUpPageLocators.GENDER_LOCATORS[user_gender]
@@ -67,9 +72,9 @@ class SignUpPage:
         self.click_submit_button()
 
     def fill_signup_step_info(self, user_data):
-        self._fill_username(user_data['username'])
-        self._fill_birthday(user_data['birthday'])
-        self._fill_gender(user_data['gender'])
+        self._fill_username(user_data["username"])
+        self._fill_birthday(user_data["birthday"])
+        self._fill_gender(user_data["gender"])
         self.click_submit_button()
 
     def fill_signup_step_terms(self):
@@ -81,14 +86,22 @@ class SignUpPage:
         """
         Fill birthday fields partially for validation testing
         Args:
+            birthday_data: {
             day: Day value (optional)
             month: Month value (optional)
             year: Year value (optional)
+            }
         """
-        if birthday_data.get('day'):
-            browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(birthday_data['day'])
-        if birthday_data.get('month'):
-            browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(birthday_data['month'])
-        if birthday_data.get('year'):
-            browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(birthday_data['year'])
+        if birthday_data.get("day"):
+            browser.element(by.xpath(SignUpPageLocators.BD_DATE_INPUT)).type(
+                birthday_data["day"]
+            )
+        if birthday_data.get("month"):
+            browser.element(by.xpath(SignUpPageLocators.BD_MONTH_INPUT)).type(
+                birthday_data["month"]
+            )
+        if birthday_data.get("year"):
+            browser.element(by.xpath(SignUpPageLocators.BD_YEAR_INPUT)).type(
+                birthday_data["year"]
+            )
         self.click_submit_button()

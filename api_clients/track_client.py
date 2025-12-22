@@ -16,10 +16,10 @@ class TrackClient(SpotifyBaseClient):
         Returns:  True if added
         """
         self.logger.info(f"Adding track {track_id} to favorites")
-        request_body = {'ids': [track_id]}
+        request_body = {"ids": [track_id]}
         validate(instance=request_body, schema=ADD_TRACK)
 
-        response = self._put('/me/tracks', json=request_body)
+        response = self._put("/me/tracks", json=request_body)
 
         return response.status_code == 200
 
@@ -30,7 +30,7 @@ class TrackClient(SpotifyBaseClient):
         Returns: True if track is saved
         """
         self.logger.info(f"Checking if track {track_id} is saved")
-        response = self._get('/me/tracks/contains', params={'ids': track_id})
+        response = self._get("/me/tracks/contains", params={"ids": track_id})
 
         assert response.status_code == 200
         return response.json()[0]
@@ -42,10 +42,10 @@ class TrackClient(SpotifyBaseClient):
         Returns: True if successfully deleted
         """
         self.logger.info(f"Deleting track {track_id} from favorites")
-        request_body = {'ids': [track_id]}
+        request_body = {"ids": [track_id]}
         validate(instance=request_body, schema=DELETE_TRACK)
 
-        response = self._delete('/me/tracks', json={'ids': [track_id]})
+        response = self._delete("/me/tracks", json={"ids": [track_id]})
 
         return response.status_code == 200
 
@@ -56,7 +56,7 @@ class TrackClient(SpotifyBaseClient):
         Returns: Dictionary with track information
         """
         self.logger.info(f"Getting track info for {track_id}")
-        response = self._get(f'/tracks/{track_id}')
+        response = self._get(f"/tracks/{track_id}")
 
         assert response.status_code == 200
 

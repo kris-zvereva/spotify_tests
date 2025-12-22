@@ -1,86 +1,85 @@
 import allure
 import pytest
 from allure import step
+
 from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 
 
-@allure.feature('Tracks')
-@allure.story('Manage favorite tracks')
+@allure.feature("Tracks")
+@allure.story("Manage favorite tracks")
 @allure.severity(allure.severity_level.NORMAL)
-@allure.label('layer', 'API')
-@allure.tag('tracks', 'favorites', 'api')
-@pytest.mark.skip(reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). "
-                         "Passes locally but fails in headless CI environment")
+@allure.label("layer", "API")
+@allure.tag("tracks", "favorites", "api")
+@pytest.mark.skip(
+    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). "
+    "Passes locally but fails in headless CI environment"
+)
 class TestTracksManagement:
-
-    @allure.title('Add track to favorites')
-    @allure.description('Search for track, add to favorites, verify it is saved')
+    @allure.title("Add track to favorites")
+    @allure.description("Search for track, add to favorites, verify it is saved")
     def test_add_track_to_favs(self, search_client, user_track_client):
-        with step('Search for track'):
+        with step("Search for track"):
             track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
-            allure.attach(track_id, 'Track ID', allure.attachment_type.TEXT)
+            allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
 
-        with step('Add track to favorites'):
+        with step("Add track to favorites"):
             assert user_track_client.add_track_to_fav(track_id)
 
-            with step('Verify track is saved'):
+            with step("Verify track is saved"):
                 assert user_track_client.is_track_saved(track_id)
 
-    @allure.title('Delete track from favorites')
-    @allure.description('Add track to favorites, then delete and verify removal')
+    @allure.title("Delete track from favorites")
+    @allure.description("Add track to favorites, then delete and verify removal")
     def test_delete_track_from_favs(self, search_client, user_track_client):
-        with step('Search for track'):
+        with step("Search for track"):
             track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
 
-        with step('Add track to favorites'):
+        with step("Add track to favorites"):
             assert user_track_client.add_track_to_fav(track_id)
 
-            with step('Verify track is saved'):
+            with step("Verify track is saved"):
                 assert user_track_client.is_track_saved(track_id)
 
-        with step('Delete track from favorites'):
+        with step("Delete track from favorites"):
             assert user_track_client.delete_track_from_fav(track_id)
 
-            with step('Verify track is deleted'):
+            with step("Verify track is deleted"):
                 assert not user_track_client.is_track_saved(track_id)
 
 
-
-@allure.feature('Tracks')
-@allure.story('Get track information')
-@allure.label('layer', 'API')
+@allure.feature("Tracks")
+@allure.story("Get track information")
+@allure.label("layer", "API")
 @allure.severity(allure.severity_level.NORMAL)
-@allure.tag('tracks', 'info', 'api')
+@allure.tag("tracks", "info", "api")
 class TestTrackInfo:
-
-    @allure.title('Get track returns album information')
-    @allure.description('Retrieve track by ID and verify album data is present')
+    @allure.title("Get track returns album information")
+    @allure.description("Retrieve track by ID and verify album data is present")
     def test_get_track_by_id_returns_album_info(self, track_client):
-        with step('Get track information'):
-            track_data = TRACK_IDS['NOGA_EREZ_DUMB']
-            track_info = track_client.get_track_info_by_id(track_data['id'])
+        with step("Get track information"):
+            track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
+            track_info = track_client.get_track_info_by_id(track_data["id"])
 
-        with step('Verify album information'):
-            assert 'album' in track_info
-            assert 'name' in track_info['album']
-            assert track_info['album']['name'] == track_data['album']
+        with step("Verify album information"):
+            assert "album" in track_info
+            assert "name" in track_info["album"]
+            assert track_info["album"]["name"] == track_data["album"]
 
-
-    @allure.title('Get track returns explicit flag')
-    @allure.description('Retrieve track by ID and verify explicit flag field exists')
+    @allure.title("Get track returns explicit flag")
+    @allure.description("Retrieve track by ID and verify explicit flag field exists")
     def test_get_track_by_id_returns_explicit_flag(self, track_client):
-        with step('Get non-explicit track information'):
-            track_data = TRACK_IDS['NOGA_EREZ_DUMB']
-            track_info = track_client.get_track_info_by_id(track_data['id'])
+        with step("Get non-explicit track information"):
+            track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
+            track_info = track_client.get_track_info_by_id(track_data["id"])
 
-        with step('Verify explicit flag is False'):
-            assert 'explicit' in track_info
-            assert track_info['explicit'] == track_data['explicit']
+        with step("Verify explicit flag is False"):
+            assert "explicit" in track_info
+            assert track_info["explicit"] == track_data["explicit"]
 
-        with step('Get explicit track information'):
-            track_data = TRACK_IDS['SOFIA_ISELLA_DOLL']
-            track_info = track_client.get_track_info_by_id(track_data['id'])
+        with step("Get explicit track information"):
+            track_data = TRACK_IDS["SOFIA_ISELLA_DOLL"]
+            track_info = track_client.get_track_info_by_id(track_data["id"])
 
-        with step('Verify explicit flag is True'):
-            assert 'explicit' in track_info
-            assert track_info['explicit'] == track_data['explicit']
+        with step("Verify explicit flag is True"):
+            assert "explicit" in track_info
+            assert track_info["explicit"] == track_data["explicit"]

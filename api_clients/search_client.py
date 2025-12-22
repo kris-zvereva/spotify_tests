@@ -14,17 +14,17 @@ class SearchClient(SpotifyBaseClient):
         Returns: ID of the first found track
         """
         self.logger.info(f"Searching tracks with params: {search_params}")
-        response = self._get('/search', params=search_params)
+        response = self._get("/search", params=search_params)
 
         assert response.status_code == 200, f"Search failed: {response.text}"
 
         search_data = response.json()
         validate(instance=search_data, schema=GET_TRACK_ID)
-        tracks = search_data['tracks']['items']
+        tracks = search_data["tracks"]["items"]
 
         assert len(tracks) > 0, "No tracks found!"
 
-        track_id = tracks[0]['id']
+        track_id = tracks[0]["id"]
         self.logger.info(f"Found track ID: {track_id}")
 
         return track_id

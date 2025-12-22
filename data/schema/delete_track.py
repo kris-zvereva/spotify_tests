@@ -1,14 +1,5 @@
 DELETE_TRACK = {
-  "type": "object",
-  "properties": {
-    "ids": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  },
-  "required": [
-    "ids"
-  ]
+    "type": "object",
+    "properties": {"ids": {"type": "array", "items": {"type": "string"}}},
+    "required": ["ids"],
 }
