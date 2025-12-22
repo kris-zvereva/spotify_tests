@@ -1,4 +1,5 @@
 import allure
+import pytest
 from allure import step
 from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 
@@ -8,6 +9,7 @@ from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label('layer', 'API')
 @allure.tag('tracks', 'favorites', 'api')
+@pytest.mark.skip("Requires local OAuth")
 class TestTracksManagement:
 
     @allure.title('Add track to favorites')
