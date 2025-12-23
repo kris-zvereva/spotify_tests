@@ -107,16 +107,11 @@ For UI tests, the report includes the following attachments:
 - Browser console logs
 - Page source
 - Test execution video
-# TODO screenshot
+![img.png](readme_media/img4.png)
 
 For API tests, the report includes the following attachments:
 - Logs (console / request-response)
-# TODO screenshot
-
-For mobile tests, the report includes the following attachments:
-- Screenshot
-- Test execution video
-# TODO screenshot
+![img.png](readme_media/img5.png)
 
 TestOps run is configured:
 ![img.png](readme_media/img3.png)
