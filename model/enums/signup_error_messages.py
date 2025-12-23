@@ -15,3 +15,4 @@ class ErrorMessages(Enum):
     BD_INVALID_YEAR_FORMAT_ERROR = "Please enter a birth year from 1900 onwards."
     EMAIL_HINT = "You'll need to confirm this email later."
     PASSWORD_HINT = "Use at least 10 characters."
+    DOB_HINT = "Sorry, you don’t meet Spotify’s age requirements."

@@ -44,3 +44,28 @@ class TestSignUpValidationsAndroid:
 
             with step("Verify the hint is displayed"):
                 assert_signup.verify_password_hint_displayed()
+
+    @allure.title("Age validation prevents signup with default birth date")
+    @allure.description(
+        "Verifies validation errors for empty username, birthday and gender fields"
+    )
+    def test_signup_is_blocked_with_default_birth_date(
+        self, android_signup_page, test_user, assert_signup
+    ):
+        with step("Click signup button"):
+            android_signup_page.click_signup_button()
+
+        with step("Select continue with email option"):
+            android_signup_page.click_continue_with_email()
+
+        with step("Fill email and click next"):
+            android_signup_page.fill_signup_step_email(test_user["email"])
+
+        with step("Fill password and click next"):
+            android_signup_page.fill_signup_step_password(test_user["password"])
+
+        with step("Don't change the values in DOB and click next"):
+            android_signup_page.click_age_next()
+
+            with step("Verify age restriction error is displayed"):
+                assert_signup.verify_dob_hint_displayed()

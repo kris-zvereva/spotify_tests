@@ -80,3 +80,4 @@ class SignUpErrorLocatorsAndroid:
         AppiumBy.ID,
         "com.spotify.music:id/password_error_message",
     )
+    DOB_ERROR_MESSAGE = (AppiumBy.ID, "com.spotify.music:id/age_error_message")

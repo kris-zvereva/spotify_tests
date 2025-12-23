@@ -50,12 +50,12 @@ class SignUpPageAndroid:
         self.fill_password(password)
         self.click_password_next()
 
-    def _click_age_next(self):
+    def click_age_next(self):
         browser.element(SignUpPageLocatorsAndroid.AGE_NEXT_BUTTON).click()
 
     def fill_signup_step_birthday(self, birthday_dict):
         self._fill_birthday_year(birthday_dict)
-        self._click_age_next()
+        self.click_age_next()
 
     def select_gender(self, gender):
         locator = SignUpPageLocatorsAndroid.GENDER_LOCATORS[gender]

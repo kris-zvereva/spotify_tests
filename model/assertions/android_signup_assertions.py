@@ -33,3 +33,10 @@ class SignUpAssertionsAndroid:
         browser.element(SignUpErrorLocatorsAndroid.PASSWORD_ERROR_MESSAGE).should(
             have.text(ErrorMessages.PASSWORD_HINT.value)
         )
+
+    def verify_dob_hint_displayed(self):
+        """Verify DOB hint is visible"""
+        browser.element(SignUpErrorLocatorsAndroid.DOB_ERROR_MESSAGE).should(be.visible)
+        browser.element(SignUpErrorLocatorsAndroid.DOB_ERROR_MESSAGE).should(
+            have.text(ErrorMessages.DOB_HINT.value)
+        )
