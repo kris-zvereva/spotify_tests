@@ -2,6 +2,7 @@ import base64
 import os
 import random
 import time
+from pathlib import Path
 from urllib.parse import urlencode
 
 import pytest
@@ -15,7 +16,8 @@ from api_clients.search_client import SearchClient
 from api_clients.track_client import TrackClient
 from config import settings
 
-load_dotenv(".env.api")
+env_path = Path(__file__).resolve().parents[2] / ".env.api"
+load_dotenv(env_path)
 
 
 @pytest.fixture(scope="session")
@@ -56,7 +58,7 @@ def setup_browser():
 
     # Chrome options для Jenkins (headless)
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
