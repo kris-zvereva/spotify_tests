@@ -10,9 +10,7 @@ from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label("layer", "API")
 @allure.tag("tracks", "favorites", "api")
-@pytest.mark.skip(
-    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment",
-)
+@pytest.mark.ci_skip
 class TestTracksManagement:
     @allure.title("Add track to favorites")
     @allure.description("Search for track, add to favorites, verify it is saved")

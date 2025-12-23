@@ -8,9 +8,7 @@ from allure import step
 @allure.label("layer", "Mobile")
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.tag("signup", "android", "smoke")
-@pytest.mark.skip(
-    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment",
-)
+@pytest.mark.ci_skip
 class TestSignUpAndroid:
     @allure.title("Successful user registration via Android app")
     @allure.description(
