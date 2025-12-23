@@ -12,15 +12,14 @@ from data.user_data import PLAYLIST_INFO, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label("layer", "API")
 @allure.tag("playlists", "api")
+@pytest.mark.skipif(
+    os.getenv("WEB_CONTEXT") == "remote",
+    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment",
+)
 class TestPlaylist:
     @allure.title("Create playlist and add tracks")
     @allure.description("Create new playlist, add tracks, verify tracks are present")
     def test_create_playlist_and_verify_items(self, playlist_client, user_id):
-        if os.getenv("WEB_CONTEXT") == "remote":
-            pytest.skip(
-                reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment"
-            )
-
         track_ids = [track_data["id"] for track_data in TRACK_IDS.values()]
 
         with step("Create playlist"):

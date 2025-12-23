@@ -12,15 +12,14 @@ from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 @allure.severity(allure.severity_level.NORMAL)
 @allure.label("layer", "API")
 @allure.tag("tracks", "favorites", "api")
+@pytest.mark.skipif(
+    os.getenv("WEB_CONTEXT") == "remote",
+    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment",
+)
 class TestTracksManagement:
     @allure.title("Add track to favorites")
     @allure.description("Search for track, add to favorites, verify it is saved")
     def test_add_track_to_favs(self, search_client, user_track_client):
-        if os.getenv("WEB_CONTEXT") == "remote":
-            pytest.skip(
-                reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment"
-            )
-
         with step("Search for track"):
             track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
             allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
@@ -34,11 +33,6 @@ class TestTracksManagement:
     @allure.title("Delete track from favorites")
     @allure.description("Add track to favorites, then delete and verify removal")
     def test_delete_track_from_favs(self, search_client, user_track_client):
-        if os.getenv("WEB_CONTEXT") == "remote":
-            pytest.skip(
-                reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment"
-            )
-
         with step("Search for track"):
             track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
 
