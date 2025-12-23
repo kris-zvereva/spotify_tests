@@ -1,3 +1,5 @@
+import json
+
 import allure
 import requests
 from allure_commons.types import AttachmentType
@@ -40,3 +42,16 @@ def add_screenshot(browser):
         attachment_type=AttachmentType.PNG,
         extension=".png",
     )
+
+
+def attach_browser_logs(driver):
+    try:
+        logs = driver.get_log("browser")
+        if logs:
+            allure.attach(
+                json.dumps(logs, indent=2),
+                name="Browser console logs",
+                attachment_type=allure.attachment_type.JSON,
+            )
+    except Exception as e:
+        print(f"Browser logs not available: {e}")

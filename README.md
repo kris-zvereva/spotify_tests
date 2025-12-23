@@ -95,4 +95,7 @@ These tests are fully functional in local development environment with visible b
 
 ## 🔗 CI/CD Integration
 
-*Documentation for Jenkins, Allure TestOps, and Telegram notifications follows below...*
+*[Jenkins Job](https://jenkins.autotests.cloud/job/zvereva_diploma/) is created*
+![img.png](readme_media/img.png)
+
+**
