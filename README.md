@@ -27,6 +27,7 @@ Comprehensive test automation suite for Spotify application covering Web, API, a
   - Password field requirement
 
 
+
   > ⚠️ *Note: Tests requiring OAuth authentication are skipped in CI due to Spotify's anti-bot protection (reCAPTCHA). These tests pass successfully in local environment.*
   
 
@@ -41,42 +42,78 @@ Comprehensive test automation suite for Spotify application covering Web, API, a
 - **BrowserStack** - Cloud testing infrastructure
 - **Poetry** - Dependency management
 
-## ⚙️ Test Execution
+## ⚙️ Setup & Configuration
 
-### Prerequisites
+### 1. Install Dependencies
 ```bash
-# Install dependencies
 poetry install
 ```
 
-### Local Execution
-```bash
-# Run all tests
-pytest tests -v
+### 2. Spotify API Credentials
 
-# Run specific test suites
-pytest tests/web -v          # Web UI tests
-pytest tests/api -v          # API tests
-pytest tests/mobile/android -v  # Mobile tests (requires Appium + Android emulator)
+To obtain Spotify API credentials:
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Log in with your Spotify account
+3. Click **"Create app"**
+4. Fill in app details:
+   - **App name**: Any name (e.g., "Test Automation")
+   - **App description**: Any description
+   - **Redirect URI**: `http://example.com/callback` (or `http://127.0.0.1:8888/callback` for local)
+   - **API**: Select Web API
+5. After creation, you'll see:
+   - **Client ID**
+   - **Client Secret** (click "Show client secret")
+6. - Optional: Create test user accounts and add them to the app in the User Management tab. 
+Test Accounts help pass the anti-bot protection to some point.
+
+### 3. Environment Variables
+
+Create the following configuration files in project root:
+
+#### `.env` - BrowserStack credentials
+```bash
+# BrowserStack
+browserstack_username=your_browserstack_username
+browserstack_access_key=your_browserstack_access_key
+```
+#### `.env.api` - Spotify user credentials (for OAuth tests)
+```bash
+client_id=your_spotify_client_id
+client_secret=your_spotify_client_secret
+
+# Test user accounts (add 1-3 accounts for rotation)
+user1_name=test_user_1
+user1_email=test1@example.com
+user1_id=spotify_user_id_1
+user1_password=YourPassword123!
+
+user2_name=test_user_2
+user2_email=test2@example.com
+user2_id=spotify_user_id_2
+user2_password=YourPassword456!
+
+callback_url=https://example.com/callback
+```
+> 💡 **Tip**: User ID can be found in Spotify account settings or by calling `/v1/me` endpoint after authentication.
+#### `.env.mobile.local` - Local Appium configuration
+```bash
+MOBILE_REMOTE_URL=http://127.0.0.1:4723
+MOBILE_PLATFORM_VERSION=16
+MOBILE_DEVICE_NAME=emulator-5554
+MOBILE_APP=apps/spotify.apk
+MOBILE_TIMEOUT=20
 ```
 
-### Remote Execution (BrowserStack)
+#### `.env.mobile.bstack` - BrowserStack mobile configuration
 ```bash
-# Web tests on BrowserStack
-WEB_CONTEXT=remote pytest tests/web -v
-
-# Mobile tests on BrowserStack
-MOBILE_CONTEXT=remote pytest tests/mobile/android -v
+MOBILE_REMOTE_URL=https://hub-cloud.browserstack.com/wd/hub
+MOBILE_PLATFORM_VERSION=13.0
+MOBILE_DEVICE_NAME=Google Pixel 7
+MOBILE_APP=bs://your_app_id_here
+MOBILE_BSTACK_PROJECT=Spotify_Mobile_Tests
+MOBILE_BSTACK_BUILD=Android_Signup
+MOBILE_TIMEOUT=20
 ```
-
-## 🔧 Configuration
-
-### Environment Variables
-Project uses environment-specific configuration files:
-- `.env` - BrowserStack credentials
-- `.env.api` - Spotify API credentials
-- `.env.mobile.local` - Local Appium settings
-- `.env.mobile.bstack` - BrowserStack mobile settings
 
 ### Configuration Files
 - `config.py` - Web and API settings
@@ -91,6 +128,33 @@ Some tests are marked as skipped in CI environment due to:
 
 These tests are fully functional in local development environment with visible browser.
 
+## 🧪 Test Execution
+
+### Local Execution
+```bash
+# Run all tests
+pytest tests -v
+
+# Run specific test suites
+pytest tests/web -v          # Web UI tests
+pytest tests/api -v          # API tests
+pytest tests/mobile/android -v  # Mobile tests (requires Appium + Android emulator)
+
+# Run including skipped tests (flaky tests that fail in CI)
+pytest tests -v --run-skipped
+
+# Run ONLY skipped tests (they auto-run locally if context is 'local')
+pytest tests -v -m skip
+```
+
+### Generate Allure Report
+```bash
+# Run tests with Allure
+pytest tests -v --alluredir=allure-results
+
+# View report
+allure serve allure-results
+```
 ---
 
 ## 🔗 CI/CD Integration

@@ -1,3 +1,5 @@
+import os
+
 import allure
 import pytest
 from allure import step
@@ -8,16 +10,17 @@ from allure import step
 @allure.label("layer", "Mobile")
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.tag("signup", "android", "smoke")
-@pytest.mark.skip(
-    reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). "
-    "Passes locally but fails in headless CI environment"
-)
 class TestSignUpAndroid:
     @allure.title("Successful user registration via Android app")
     @allure.description(
         "Verifies user can successfully register through Spotify Android signup flow"
     )
     def test_signup_android(self, android_signup_page, test_user, assert_signup):
+        if os.getenv("WEB_CONTEXT") == "remote":
+            pytest.skip(
+                reason="Flaky due to Spotify's anti-bot protection (reCAPTCHA). Passes locally but fails in headless CI environment"
+            )
+
         with step("Click signup button"):
             android_signup_page.click_signup_button()
 
