@@ -11,7 +11,11 @@ from config import settings
 from data.user_data import generate_test_user
 from model.assertions.web_signup_assertions import SignUpAssertions
 from model.pages.web.web_signup_page import SignUpPage
-from utils.allure_attach import add_screenshot, attach_browser_logs, attach_bstack_video
+from utils.allure_attach import (
+    add_logs,
+    add_screenshot,
+    attach_bstack_video,
+)
 
 load_dotenv()
 
@@ -54,7 +58,7 @@ def setup_browser():
     yield browser
 
     add_screenshot(browser)
-    attach_browser_logs(browser.driver)
+    add_logs(browser)
 
     allure.attach(
         browser.driver.page_source,

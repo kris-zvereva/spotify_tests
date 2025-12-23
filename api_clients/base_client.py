@@ -19,6 +19,15 @@ class SpotifyBaseClient:
         self.headers = auth_headers
         self.logger = logging.getLogger(self.__class__.__name__)
 
+        if not self.logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter(
+                "%(asctime)s | %(levelname)s | %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+            )
+            handler.setFormatter(formatter)
+            self.logger.addHandler(handler)
+            self.logger.setLevel(logging.INFO)
+
     def _make_request(
         self,
         method: str,

@@ -98,4 +98,29 @@ These tests are fully functional in local development environment with visible b
 *[Jenkins Job](https://jenkins.autotests.cloud/job/zvereva_diploma/) is created*
 ![img.png](readme_media/img.png)
 
-**
+### Allure Reports in Jenkins
+
+Jenkins test runs generate an Allure report.  
+For UI tests, the report includes the following attachments:
+
+- Screenshot
+- Browser console logs
+- Page source
+- Test execution video
+# TODO screenshot
+
+For API tests, the report includes the following attachments:
+- Logs (console / request-response)
+# TODO screenshot
+
+For mobile tests, the report includes the following attachments:
+- Screenshot
+- Test execution video
+# TODO screenshot
+
+TestOps run is configured:
+![img.png](readme_media/img3.png)
+
+Telegram notification is sent after the test run completion:
+![img.png](readme_media/img2.png)
+
