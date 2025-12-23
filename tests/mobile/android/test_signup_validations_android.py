@@ -47,7 +47,8 @@ class TestSignUpValidationsAndroid:
 
     @allure.title("Age validation prevents signup with default birth date")
     @allure.description(
-        "Verifies validation errors for empty username, birthday and gender fields"
+        "Checks that the user is blocked from continuing signup "
+        "when using the default birth date values."
     )
     def test_signup_is_blocked_with_default_birth_date(
         self, android_signup_page, test_user, assert_signup
