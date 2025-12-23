@@ -28,7 +28,7 @@ Comprehensive test automation suite for Spotify application covering Web, API, a
 
 
 
-  > ⚠️ *Note: Tests requiring OAuth authentication are skipped in CI due to Spotify's anti-bot protection (reCAPTCHA). These tests pass successfully in local environment.*
+  > ⚠️ *Note: Tests requiring OAuth authentication are marked with `@pytest.mark.ci_skip` and skipped in CI due to Spotify's anti-bot protection (reCAPTCHA). These tests pass successfully in local environment.*
   
 
 ## 🚀 Tech Stack
@@ -122,7 +122,7 @@ MOBILE_TIMEOUT=20
 
 ## 📝 Known Limitations
 
-Some tests are marked as skipped in CI environment due to:
+Some tests are marked with `@pytest.mark.ci_skip` in CI environment due to:
 - **Spotify's anti-bot protection (reCAPTCHA)** - Triggers randomly during automated test execution
 - **OAuth flow limitations** - Requires interactive browser session not suitable for headless CI
 
@@ -130,22 +130,15 @@ These tests are fully functional in local development environment with visible b
 
 ## 🧪 Test Execution
 
-### Local Execution
-```bash
 # Run all tests
 pytest tests -v
 
-# Run specific test suites
-pytest tests/web -v          # Web UI tests
-pytest tests/api -v          # API tests
-pytest tests/mobile/android -v  # Mobile tests (requires Appium + Android emulator)
+# Run tests that are excluded from CI
+pytest tests -v -m ci_skip
 
-# Run including skipped tests (flaky tests that fail in CI)
-pytest tests -v --run-skipped
+# Run all tests except those excluded from CI (same as Jenkins)
+pytest tests -v -m "not ci_skip"
 
-# Run ONLY skipped tests (they auto-run locally if context is 'local')
-pytest tests -v -m skip
-```
 
 ### Generate Allure Report
 ```bash
