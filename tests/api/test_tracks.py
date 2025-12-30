@@ -43,15 +43,19 @@ class TestTrackInfo:
         assert "name" in track_info["album"]
         assert track_info["album"]["name"] == track_data["album"]
 
-    @allure.title("Get track returns explicit flag")
+    @pytest.mark.parametrize(
+        "track_name, track_data",
+        [
+            ("NOGA_EREZ_DUMB", TRACK_IDS["NOGA_EREZ_DUMB"]),
+            ("SOFIA_ISELLA_DOLL", TRACK_IDS["SOFIA_ISELLA_DOLL"]),
+        ],
+        ids=["explicit_track", "non_explicit_track"],
+    )
+    @allure.title("Get track returns explicit flag: {track_name}")
     @allure.description("Retrieve track by ID and verify explicit flag field exists")
-    def test_get_track_by_id_returns_explicit_flag(self, track_client):
-        track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
-        track_info = track_client.get_track_info_by_id(track_data["id"])
-        assert "explicit" in track_info
-        assert track_info["explicit"] == track_data["explicit"]
-
-        track_data = TRACK_IDS["SOFIA_ISELLA_DOLL"]
+    def test_get_track_by_id_returns_explicit_flag(
+        self, track_client, track_name, track_data
+    ):
         track_info = track_client.get_track_info_by_id(track_data["id"])
         assert "explicit" in track_info
         assert track_info["explicit"] == track_data["explicit"]

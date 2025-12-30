@@ -2,6 +2,7 @@ import base64
 import logging
 import os
 import random
+from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -19,6 +20,40 @@ from config import settings
 
 env_path = Path(__file__).resolve().parents[2] / ".env.api"
 load_dotenv(env_path)
+
+
+@dataclass
+class TestAccount:
+    name: str
+    email: str
+    id: str
+    password: str
+
+
+def get_random_test_account() -> TestAccount:
+    """Returns random test account credentials"""
+    account_count = 0
+    for i in range(1, 20):
+        if not os.getenv(f"user{i}_email"):
+            break
+        account_count = i
+
+    if account_count == 0:
+        raise ValueError("No test accounts found in environment variables!")
+
+    random_i = random.randint(1, account_count)
+    return TestAccount(
+        name=os.getenv(f"user{random_i}_name"),
+        email=os.getenv(f"user{random_i}_email"),
+        id=os.getenv(f"user{random_i}_id"),
+        password=os.getenv(f"user{random_i}_password"),
+    )
+
+
+@pytest.fixture(scope="session")
+def test_account():
+    """Get random test account for session"""
+    return get_random_test_account()
 
 
 @pytest.fixture(scope="session")
@@ -77,32 +112,6 @@ def setup_browser():
         logging.warning(f"Browser cleanup error (can be ignored): {e}")
 
 
-def get_random_test_account():
-    """Returns random test account credentials"""
-    account_count = 0
-    i = 1
-    while os.getenv(f"user{i}_email"):
-        account_count = i
-        i += 1
-    if account_count == 0:
-        raise ValueError("No test accounts found in environment variables!")
-
-    random_i = random.randint(1, account_count)
-
-    return {
-        "name": os.getenv(f"user{random_i}_name"),
-        "email": os.getenv(f"user{random_i}_email"),
-        "id": os.getenv(f"user{random_i}_id"),
-        "password": os.getenv(f"user{random_i}_password"),
-    }
-
-
-@pytest.fixture(scope="session")
-def test_account():
-    """Get random test account for session"""
-    return get_random_test_account()
-
-
 @pytest.fixture(scope="session")
 def user_auth_token(setup_browser, test_account):
     """
@@ -111,8 +120,8 @@ def user_auth_token(setup_browser, test_account):
     """
     client_id = os.getenv("client_id")
     client_secret = os.getenv("client_secret")
-    user_mail = test_account["email"]
-    user_password = test_account["password"]
+    user_mail = test_account.email
+    user_password = test_account.password
     callback_url = os.getenv("callback_url")
 
     # Authorization request
@@ -153,7 +162,7 @@ def user_auth_token(setup_browser, test_account):
 
     return {
         "Authorization": f"Bearer {token_response.json()['access_token']}",
-        "user_id": test_account["id"],
+        "user_id": test_account.id,
     }
 
 
