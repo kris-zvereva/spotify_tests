@@ -1,3 +1,4 @@
+import allure
 from jsonschema.validators import validate
 
 from api_clients.base_client import SpotifyBaseClient
@@ -7,6 +8,7 @@ from data.schema.get_track_id import GET_TRACK_ID
 class SearchClient(SpotifyBaseClient):
     """Client for search operations"""
 
+    @allure.step("Search for track and return its ID")
     def get_track_id(self, search_params: dict) -> str:
         """
         Search for track and return its ID

@@ -1,5 +1,6 @@
 import time
 
+import allure
 from selene import be, browser, by
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -52,36 +53,44 @@ class SignUpPage:
         locator = SignUpPageLocators.GENDER_LOCATORS[user_gender]
         self._click_with_human_simulation(locator)
 
+    @allure.step("Open signup page")
     def open_signup_page(self):
         browser.open(settings.WEB_URL)
         browser.element(by.xpath(SignUpPageLocators.SIGNUP_BUTTON)).should(be.visible)
 
+    @allure.step("click Next button")
     def click_submit_button(self):
         self._click_with_human_simulation(SignUpPageLocators.SUBMIT_BUTTON)
 
+    @allure.step("Click signup button")
     def click_signup_button(self):
         self._click_with_human_simulation(SignUpPageLocators.SIGNUP_BUTTON)
         browser.element(by.xpath(SignUpPageLocators.EMAIL_INPUT)).should(be.visible)
 
+    @allure.step("Fill email")
     def fill_signup_step_email(self, user_email):
         self._fill_email_input(user_email)
         self.click_submit_button()
 
+    @allure.step("Fill password")
     def fill_signup_step_password(self, user_password):
         self._fill_password_input(user_password)
         self.click_submit_button()
 
+    @allure.step("Fill user info: username, gender and DOB")
     def fill_signup_step_info(self, user_data):
         self._fill_username(user_data["username"])
         self._fill_birthday(user_data["birthday"])
         self._fill_gender(user_data["gender"])
         self.click_submit_button()
 
+    @allure.step("Accept terms and conditions")
     def fill_signup_step_terms(self):
         browser.element(by.xpath(SignUpPageLocators.MARKETING_CHECKBOX)).click()
         browser.element(by.xpath(SignUpPageLocators.PRIVACY_CHECKBOX)).click()
         self.click_submit_button()
 
+    @allure.step("Fill partial birthday")
     def fill_partial_birthday(self, birthday_data):
         """
         Fill birthday fields partially for validation testing

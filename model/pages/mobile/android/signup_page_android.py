@@ -1,3 +1,4 @@
+import allure
 from appium.webdriver.common.appiumby import AppiumBy
 from selene import be, browser
 
@@ -14,9 +15,11 @@ class SignUpPageAndroid:
         except Exception:
             pass
 
+    @allure.step("Click signup button")
     def click_signup_button(self):
         browser.element(SignUpPageLocatorsAndroid.SIGNUP_BUTTON).click()
 
+    @allure.step("Select continue with email option")
     def click_continue_with_email(self):
         browser.element(SignUpPageLocatorsAndroid.CONTINUE_WITH_EMAIL).click()
 
@@ -27,9 +30,11 @@ class SignUpPageAndroid:
     def click_email_next(self):
         browser.element(SignUpPageLocatorsAndroid.EMAIL_NEXT_BUTTON).click()
 
+    @allure.step("Verify the next button is disabled")
     def is_email_next_button_disabled(self):
         browser.element(SignUpPageLocatorsAndroid.EMAIL_NEXT_BUTTON).should(be.disabled)
 
+    @allure.step("Fill email and click next")
     def fill_signup_step_email(self, email):
         self.fill_email(email)
         self.click_email_next()
@@ -41,42 +46,53 @@ class SignUpPageAndroid:
     def click_password_next(self):
         browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).click()
 
+    @allure.step("Verify the next button is disabled")
     def is_password_next_button_disabled(self):
         browser.element(SignUpPageLocatorsAndroid.PASSWORD_NEXT_BUTTON).should(
             be.disabled
         )
 
+    @allure.step("Fill password and click next")
     def fill_signup_step_password(self, password):
         self.fill_password(password)
         self.click_password_next()
 
+    @allure.step("Click next button on age screen")
     def click_age_next(self):
         browser.element(SignUpPageLocatorsAndroid.AGE_NEXT_BUTTON).click()
 
+    @allure.step("Select DOB and click next")
     def fill_signup_step_birthday(self, birthday_dict):
         self._fill_birthday_year(birthday_dict)
         self.click_age_next()
 
+    @allure.step("Select gender")
     def select_gender(self, gender):
         locator = SignUpPageLocatorsAndroid.GENDER_LOCATORS[gender]
         browser.element(locator).click()
 
+    @allure.step("Fill username")
     def fill_username(self, username):
         browser.element(SignUpPageLocatorsAndroid.USERNAME_INPUT).type(username)
         self._hide_keyboard()
 
+    @allure.step("Agree to the terms")
     def agree_to_terms(self):
         browser.element(SignUpPageLocatorsAndroid.AGREE_TERMS_SWITCH).click()
 
+    @allure.step("Agree to marketing terms")
     def agree_to_marketing(self):
         browser.element(SignUpPageLocatorsAndroid.AGREE_MARKETING_SWITCH).click()
 
+    @allure.step("click Create account button")
     def click_create_account(self):
         browser.element(SignUpPageLocatorsAndroid.CREATE_ACCOUNT_BUTTON).click()
 
+    @allure.step("Skip notifications")
     def decline_notifications(self):
         browser.element(SignUpPageLocatorsAndroid.DECLINE_NOTIFICATION_BUTTON).click()
 
+    @allure.step("Find and select the artists")
     def search_and_select_artist(self, artist_names):
         for artist in artist_names:
             browser.element(SignUpPageLocatorsAndroid.SEARCH_FIELD).click()
@@ -84,10 +100,12 @@ class SignUpPageAndroid:
             self._hide_keyboard()
             browser.element(SignUpPageLocatorsAndroid.FIRST_SUGGESTED_ARTIST).click()
 
+    @allure.step("Click Done button")
     def click_done(self):
         browser.element(SignUpPageLocatorsAndroid.DONE_BUTTON).click()
         return self
 
+    @allure.step("Skip listening by clicking not now button")
     def click_not_now(self):
         browser.element(SignUpPageLocatorsAndroid.NOT_NOW_BUTTON).click()
 

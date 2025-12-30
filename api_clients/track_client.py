@@ -1,3 +1,4 @@
+import allure
 from jsonschema import validate
 
 from api_clients.base_client import SpotifyBaseClient
@@ -9,6 +10,7 @@ from data.schema.get_track_info import GET_TRACK_INFO
 class TrackClient(SpotifyBaseClient):
     """Client for working with tracks"""
 
+    @allure.step("Add track to favorites")
     def add_track_to_fav(self, track_id: str) -> bool:
         """
         Add track to favorites
@@ -23,6 +25,7 @@ class TrackClient(SpotifyBaseClient):
 
         return response.status_code == 200
 
+    @allure.step("Verify track is saved")
     def is_track_saved(self, track_id: str) -> bool:
         """
         Check if track is in favorites
@@ -35,6 +38,7 @@ class TrackClient(SpotifyBaseClient):
         assert response.status_code == 200
         return response.json()[0]
 
+    @allure.step("Delete track from favorites")
     def delete_track_from_fav(self, track_id: str) -> bool:
         """
         Delete track from favorites
@@ -49,6 +53,7 @@ class TrackClient(SpotifyBaseClient):
 
         return response.status_code == 200
 
+    @allure.step("Get track information by ID")
     def get_track_info_by_id(self, track_id: str) -> dict:
         """
         Get track information by ID

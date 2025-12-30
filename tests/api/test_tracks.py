@@ -15,33 +15,19 @@ class TestTracksManagement:
     @allure.title("Add track to favorites")
     @allure.description("Search for track, add to favorites, verify it is saved")
     def test_add_track_to_favs(self, search_client, user_track_client):
-        with step("Search for track"):
-            track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
-            allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
-
-        with step("Add track to favorites"):
-            assert user_track_client.add_track_to_fav(track_id)
-
-            with step("Verify track is saved"):
-                assert user_track_client.is_track_saved(track_id)
+        track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
+        allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
+        assert user_track_client.add_track_to_fav(track_id)
+        assert user_track_client.is_track_saved(track_id)
 
     @allure.title("Delete track from favorites")
     @allure.description("Add track to favorites, then delete and verify removal")
     def test_delete_track_from_favs(self, search_client, user_track_client):
-        with step("Search for track"):
-            track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
-
-        with step("Add track to favorites"):
-            assert user_track_client.add_track_to_fav(track_id)
-
-            with step("Verify track is saved"):
-                assert user_track_client.is_track_saved(track_id)
-
-        with step("Delete track from favorites"):
-            assert user_track_client.delete_track_from_fav(track_id)
-
-            with step("Verify track is deleted"):
-                assert not user_track_client.is_track_saved(track_id)
+        track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
+        assert user_track_client.add_track_to_fav(track_id)
+        assert user_track_client.is_track_saved(track_id)
+        assert user_track_client.delete_track_from_fav(track_id)
+        assert not user_track_client.is_track_saved(track_id)
 
 
 @allure.feature("Tracks")
@@ -53,9 +39,8 @@ class TestTrackInfo:
     @allure.title("Get track returns album information")
     @allure.description("Retrieve track by ID and verify album data is present")
     def test_get_track_by_id_returns_album_info(self, track_client):
-        with step("Get track information"):
-            track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
-            track_info = track_client.get_track_info_by_id(track_data["id"])
+        track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
+        track_info = track_client.get_track_info_by_id(track_data["id"])
 
         with step("Verify album information"):
             assert "album" in track_info

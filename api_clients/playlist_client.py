@@ -1,3 +1,4 @@
+import allure
 from jsonschema.validators import validate
 
 from api_clients.base_client import SpotifyBaseClient
@@ -15,6 +16,7 @@ from data.schema.get_playlist_items import GET_PLAYLIST_ITEMS
 class PlaylistClient(SpotifyBaseClient):
     """Client for working with playlists"""
 
+    @allure.step("Create playlist")
     def create_playlist(self, user_id: str, playlist_info: dict) -> str:
         """
         Create playlist
@@ -37,6 +39,7 @@ class PlaylistClient(SpotifyBaseClient):
 
         return playlist_id
 
+    @allure.step("Add tracks to playlist")
     def add_items_to_playlist(self, playlist_id: str, track_ids: list) -> dict:
         """
         Add tracks to playlist
@@ -57,6 +60,7 @@ class PlaylistClient(SpotifyBaseClient):
 
         return data
 
+    @allure.step("Retrieve playlist items")
     def get_playlist_items(self, playlist_id: str) -> list:
         """
         Get track IDs from playlist

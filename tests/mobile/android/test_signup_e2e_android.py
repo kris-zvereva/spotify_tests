@@ -1,6 +1,5 @@
 import allure
 import pytest
-from allure import step
 
 
 @allure.feature("User Registration")
@@ -15,45 +14,18 @@ class TestSignUpAndroid:
         "Verifies user can successfully register through Spotify Android signup flow"
     )
     def test_signup_android(self, android_signup_page, test_user, assert_signup):
-        with step("Click signup button"):
-            android_signup_page.click_signup_button()
-
-        with step("Select continue with email option"):
-            android_signup_page.click_continue_with_email()
-
-        with step("Fill email and click next"):
-            android_signup_page.fill_signup_step_email(test_user["email"])
-
-        with step("Fill password and click next"):
-            android_signup_page.fill_signup_step_password(test_user["password"])
-
-        with step("Select DOB and click next"):
-            android_signup_page.fill_signup_step_birthday(test_user["birthday"])
-
-        with step("Select gender"):
-            android_signup_page.select_gender(test_user["gender"])
-
-        with step("Fill username"):
-            android_signup_page.fill_username(test_user["username"])
-
-        with step("Agree to the terms"):
-            android_signup_page.agree_to_terms()
-            android_signup_page.agree_to_marketing()
-
-        with step("click Create account button"):
-            android_signup_page.click_create_account()
-
-        with step("Skip notifications"):
-            android_signup_page.decline_notifications()
-
-        with step("Find and select the artists"):
-            android_signup_page.search_and_select_artist(test_user["artists"])
-
-        with step("Click Done button"):
-            android_signup_page.click_done()
-
-        with step("Skip listening by clicking not now button"):
-            android_signup_page.click_not_now()
-
-        with step("Verify the account button is displayed"):
-            assert_signup.verify_profile_button_visible()
+        android_signup_page.click_signup_button()
+        android_signup_page.click_continue_with_email()
+        android_signup_page.fill_signup_step_email(test_user["email"])
+        android_signup_page.fill_signup_step_password(test_user["password"])
+        android_signup_page.fill_signup_step_birthday(test_user["birthday"])
+        android_signup_page.select_gender(test_user["gender"])
+        android_signup_page.fill_username(test_user["username"])
+        android_signup_page.agree_to_terms()
+        android_signup_page.agree_to_marketing()
+        android_signup_page.click_create_account()
+        android_signup_page.decline_notifications()
+        android_signup_page.search_and_select_artist(test_user["artists"])
+        android_signup_page.click_done()
+        android_signup_page.click_not_now()
+        assert_signup.verify_profile_button_visible()
