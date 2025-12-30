@@ -9,8 +9,8 @@ from selenium.webdriver.chrome.options import Options
 
 from config import settings
 from data.user_data import generate_test_user
-from model.assertions.web_signup_assertions import SignUpAssertions
-from model.pages.web.web_signup_page import SignUpPage
+from model.web.web_signup_assertions import SignUpAssertions
+from model.web.web_signup_page import SignUpPage
 from utils.allure_attach import (
     add_logs,
     add_screenshot,

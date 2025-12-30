@@ -2,7 +2,7 @@ import allure
 from appium.webdriver.common.appiumby import AppiumBy
 from selene import be, browser
 
-from model.locators.android_signup_locators import SignUpPageLocatorsAndroid
+from model.mobile.android_signup_locators import SignUpPageLocatorsAndroid
 
 
 class SignUpPageAndroid:

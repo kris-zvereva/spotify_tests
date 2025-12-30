@@ -7,8 +7,8 @@ from selene import browser
 
 from data.user_data import generate_test_user
 from mobile_config import mobile_settings, to_driver_options
-from model.assertions.android_signup_assertions import SignUpAssertionsAndroid
-from model.pages.mobile.android.signup_page_android import SignUpPageAndroid
+from model.mobile.android_signup_assertions import SignUpAssertionsAndroid
+from model.mobile.signup_page_android import SignUpPageAndroid
 from utils.allure_attach import add_screenshot, attach_bstack_video
 
 

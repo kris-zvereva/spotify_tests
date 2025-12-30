@@ -5,7 +5,7 @@ from selene import be, browser, by
 from selenium.webdriver.common.action_chains import ActionChains
 
 from config import settings
-from model.locators.web_signup_page_locators import SignUpPageLocators
+from model.web.web_signup_page_locators import SignUpPageLocators
 
 
 class SignUpPage:
