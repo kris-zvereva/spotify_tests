@@ -36,6 +36,7 @@ class TrackClient(SpotifyBaseClient):
         response = self._get("/me/tracks/contains", params={"ids": track_id})
 
         assert response.status_code == 200
+
         return response.json()[0]
 
     @allure.step("Delete track from favorites")
@@ -49,7 +50,7 @@ class TrackClient(SpotifyBaseClient):
         request_body = {"ids": [track_id]}
         validate(instance=request_body, schema=DELETE_TRACK)
 
-        response = self._delete("/me/tracks", json={"ids": [track_id]})
+        response = self._delete("/me/tracks", json=request_body)
 
         return response.status_code == 200
 

@@ -22,8 +22,8 @@ class SearchClient(SpotifyBaseClient):
 
         search_data = response.json()
         validate(instance=search_data, schema=GET_TRACK_ID)
-        tracks = search_data["tracks"]["items"]
 
+        tracks = search_data["tracks"]["items"]
         assert len(tracks) > 0, "No tracks found!"
 
         track_id = tracks[0]["id"]
