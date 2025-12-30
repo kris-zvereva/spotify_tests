@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from appium.options.android import UiAutomator2Options
+from dotenv import find_dotenv, load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from utils.env_loader import load_env
@@ -72,8 +73,12 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     return options
 
 
+base_env = find_dotenv(".env", usecwd=True)
+if base_env:
+    load_dotenv(base_env)
+
 # Load appropriate .env file based on context
-context = os.getenv("MOBILE_CONTEXT", " remote")
+context = os.getenv("MOBILE_CONTEXT", "remote")
 env_filename = ".env.mobile.bstack" if context == "remote" else ".env.mobile.local"
 
 load_env(env_filename)
