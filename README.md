@@ -174,5 +174,5 @@ TestOps run is configured:
 ![img.png](readme_media/img3.png)
 
 Telegram notification is sent after the test run completion:
-![img.png](readme_media/img2.png)
+![img.png](readme_media/img.png)
 
