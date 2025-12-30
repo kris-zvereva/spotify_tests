@@ -1,16 +1,17 @@
 import base64
+import logging
 import os
 import random
-import time
 from pathlib import Path
 from urllib.parse import urlencode
 
 import pytest
 import requests
 from dotenv import load_dotenv
-from selene import be, browser, command
+from selene import browser
 from selenium import webdriver
 
+from api_clients.auth_helper import SpotifyAuthHelper
 from api_clients.playlist_client import PlaylistClient
 from api_clients.search_client import SearchClient
 from api_clients.track_client import TrackClient
@@ -36,7 +37,7 @@ def client_credentials_token():
     encoded_credentials = base64.b64encode(credentials.encode()).decode("utf-8")
 
     response = requests.post(
-        "https://accounts.spotify.com/api/token",
+        f"{settings.OAUTH_URL}/api/token",
         headers={
             "Authorization": f"Basic {encoded_credentials}",
             "Content-Type": "application/x-www-form-urlencoded",
@@ -73,7 +74,7 @@ def setup_browser():
         if hasattr(browser, "driver") and browser.driver:
             browser.quit()
     except Exception as e:
-        print(f"Browser cleanup error (can be ignored): {e}")
+        logging.warning(f"Browser cleanup error (can be ignored): {e}")
 
 
 def get_random_test_account():
@@ -106,7 +107,7 @@ def test_account():
 def user_auth_token(setup_browser, test_account):
     """
     Token for USER endpoints (favorites, playlists).
-    Requires browser authorization (once per session).
+    requires browser authorization
     """
     client_id = os.getenv("client_id")
     client_secret = os.getenv("client_secret")
@@ -124,38 +125,17 @@ def user_auth_token(setup_browser, test_account):
 
     browser.open("/authorize?" + urlencode(auth_params))
 
-    # UI login flow: spotify doesn't allow to retrieve token from api, so this is the only way
-    browser.element('//input[@id="username"]').type(user_mail)
-    browser.element('//button[@data-testid="login-button"]').click()
+    # get auth code via browser
+    authorization_code = SpotifyAuthHelper.authorize_and_get_code(
+        user_mail, user_password
+    )
 
-    # Click "Log in with password" if it appears
-    try:
-        browser.element('//button[contains(text(), "Log in with a password")]').click()
-    except Exception:
-        pass
-
-    browser.element('//input[@id="password"]').type(user_password)
-    browser.element('//button[@type="submit"]').click()
-    time.sleep(5)
-
-    # Accept permissions if prompt appears
-    if browser.element("[data-testid='auth-accept']").matching(be.visible):
-        browser.element("[data-testid='auth-accept']").perform(
-            command.js.scroll_into_view
-        ).click()
-
-    time.sleep(5)
-
-    # Extract authorization code from callback URL
-    current_url = browser.driver.current_url
-    authorization_code = current_url.split("code=")[1].split("&")[0]
-
-    # Exchange code for access token
+    # exchange code for access token
     credentials = f"{client_id}:{client_secret}"
     encoded_credentials = base64.b64encode(credentials.encode()).decode("utf-8")
 
     token_response = requests.post(
-        "https://accounts.spotify.com/api/token",
+        f"{settings.OAUTH_URL}/api/token",
         headers={
             "Authorization": f"Basic {encoded_credentials}",
             "Content-Type": "application/x-www-form-urlencoded",
