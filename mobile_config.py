@@ -2,10 +2,9 @@ import os
 from pathlib import Path
 
 from appium.options.android import UiAutomator2Options
-from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-load_dotenv()
+from utils.env_loader import load_env
 
 
 class MobileConfig(BaseSettings):
@@ -53,7 +52,7 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     options.app_activity = config.app_activity
 
     # BrowserStack capabilities if remote
-    context = os.getenv("MOBILE_CONTEXT", "remote")
+    context = os.getenv("MOBILE_CONTEXT", "local")
     if context == "remote":
         options.app = config.app
         options.set_capability(
@@ -73,8 +72,10 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     return options
 
 
-context = os.getenv("MOBILE_CONTEXT", "remote")
-if context == "remote":
-    mobile_settings = MobileConfig(_env_file=".env.mobile.bstack")
-else:
-    mobile_settings = MobileConfig(_env_file=".env.mobile.local")
+# Load appropriate .env file based on context
+context = os.getenv("MOBILE_CONTEXT", "local")
+env_filename = ".env.mobile.bstack" if context == "remote" else ".env.mobile.local"
+
+load_env(env_filename)
+
+mobile_settings = MobileConfig()

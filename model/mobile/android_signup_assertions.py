@@ -1,7 +1,7 @@
 import allure
 from selene import be, browser, have
 
-from model.enums.signup_error_messages import ErrorMessages
+from model.common.enums import ErrorMessages
 from model.mobile.android_signup_locators import (
     SignUpErrorLocatorsAndroid,
     SignUpPageLocatorsAndroid,

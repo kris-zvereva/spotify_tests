@@ -3,12 +3,10 @@ import logging
 import os
 import random
 from dataclasses import dataclass
-from pathlib import Path
 from urllib.parse import urlencode
 
 import pytest
 import requests
-from dotenv import load_dotenv
 from selene import browser
 from selenium import webdriver
 
@@ -17,9 +15,9 @@ from api_clients.playlist_client import PlaylistClient
 from api_clients.search_client import SearchClient
 from api_clients.track_client import TrackClient
 from config import settings
+from utils.env_loader import load_env
 
-env_path = Path(__file__).resolve().parents[2] / ".env.api"
-load_dotenv(env_path)
+load_env(".env.api")
 
 
 @dataclass
