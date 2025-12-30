@@ -65,7 +65,10 @@ class SignUpPageAndroid:
 
     @allure.step("Select gender")
     def select_gender(self, gender):
-        locator = SignUpPageLocatorsAndroid.GENDER_LOCATORS[gender]
+        locator_id = SignUpPageLocatorsAndroid.GENDER_BUTTON_TEMPLATE.format(
+            gender=gender
+        )
+        locator = (AppiumBy.ID, locator_id)
         browser.element(locator).click()
 
     @allure.step("Fill username")

@@ -1,6 +1,7 @@
 import allure
 from selene import be, browser, by, have
 
+from model.common.enums import PasswordRequirement, PasswordRequirementStatus
 from model.enums.signup_error_messages import ErrorMessages
 from model.web.web_signup_page_locators import (
     SignUpErrorLocators,
@@ -41,43 +42,36 @@ class SignUpAssertions:
             have.text(ErrorMessages.EMPTY_GENDER_ERROR.value)
         )
 
+    def assert_password_requirement(
+        self, requirement: PasswordRequirement, status: PasswordRequirementStatus
+    ):
+        locator = SignUpErrorLocators.PASSWORD_REQUIREMENT_TEMPLATE.format(
+            requirement=requirement.value, status=status.value
+        )
+        browser.element(locator).should(be.present)
+
     @allure.step("Verify password validation rules display")
     def verify_password_validation_state(
-        self, ten_chars_met, letter_met, number_special_met
+        self, ten_chars_met: bool, letter_met: bool, number_special_met: bool
     ):
-        """
-        Verify password validation rules display
-        Args:
-            ten_chars_met: True if 10 chars requirement met
-            letter_met: True if letter requirement met
-            number_special_met: True if number/special requirement met
-        """
-        if ten_chars_met:
-            browser.element(
-                by.xpath(SignUpErrorLocators.PASSWORD_TEN_CHARS_MET)
-            ).should(be.present)
-        else:
-            browser.element(
-                by.xpath(SignUpErrorLocators.PASSWORD_TEN_CHARS_NOT_MET)
-            ).should(be.present)
-
-        if letter_met:
-            browser.element(by.xpath(SignUpErrorLocators.PASSWORD_LETTER_MET)).should(
-                be.present
-            )
-        else:
-            browser.element(
-                by.xpath(SignUpErrorLocators.PASSWORD_LETTER_NOT_MET)
-            ).should(be.present)
-
-        if number_special_met:
-            browser.element(
-                by.xpath(SignUpErrorLocators.PASSWORD_NUMBER_SPECIAL_MET)
-            ).should(be.present)
-        else:
-            browser.element(
-                by.xpath(SignUpErrorLocators.PASSWORD_NUMBER_SPECIAL_NOT_MET)
-            ).should(be.present)
+        self.assert_password_requirement(
+            PasswordRequirement.TEN_CHARACTERS,
+            PasswordRequirementStatus.MET
+            if ten_chars_met
+            else PasswordRequirementStatus.NOT_MET,
+        )
+        self.assert_password_requirement(
+            PasswordRequirement.ONE_LETTER,
+            PasswordRequirementStatus.MET
+            if letter_met
+            else PasswordRequirementStatus.NOT_MET,
+        )
+        self.assert_password_requirement(
+            PasswordRequirement.NUMBER_OR_SPECIAL,
+            PasswordRequirementStatus.MET
+            if number_special_met
+            else PasswordRequirementStatus.NOT_MET,
+        )
 
     @allure.step("Verify the error message for birthday day is displayed")
     def verify_birthday_day_error(self):

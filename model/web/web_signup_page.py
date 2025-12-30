@@ -50,7 +50,7 @@ class SignUpPage:
         )
 
     def _fill_gender(self, user_gender):
-        locator = SignUpPageLocators.GENDER_LOCATORS[user_gender]
+        locator = SignUpPageLocators.GENDER_LOCATOR_TEMPLATE.format(gender=user_gender)
         self._click_with_human_simulation(locator)
 
     @allure.step("Start signup flow with email")

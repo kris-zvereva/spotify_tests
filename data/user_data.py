@@ -3,7 +3,7 @@ import string
 
 from faker import Faker
 
-from model.enums.user_gender import Gender
+from model.common.enums import Gender
 
 fake = Faker()
 

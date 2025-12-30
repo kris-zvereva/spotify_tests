@@ -16,3 +16,20 @@ class ErrorMessages(Enum):
     EMAIL_HINT = "You'll need to confirm this email later."
     PASSWORD_HINT = "Use at least 10 characters."
     DOB_HINT = "Sorry, you don’t meet Spotify’s age requirements."
+
+
+class Gender(Enum):
+    MALE = "male"
+    FEMALE = "female"
+    OTHER = "other"
+
+
+class PasswordRequirement(Enum):
+    TEN_CHARACTERS = "ten_characters"
+    ONE_LETTER = "one_letter"
+    NUMBER_OR_SPECIAL = "one_number_or_special_character"
+
+
+class PasswordRequirementStatus(Enum):
+    MET = "Met"
+    NOT_MET = "Not met"

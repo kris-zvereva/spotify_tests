@@ -32,16 +32,7 @@ class SignUpPageLocatorsAndroid:
 
     AGE_NEXT_BUTTON = (AppiumBy.ID, "com.spotify.music:id/age_next_button")
 
-    GENDER_LOCATORS = {
-        "female": (AppiumBy.ID, "com.spotify.music:id/gender_button_female"),
-        "male": (AppiumBy.ID, "com.spotify.music:id/gender_button_male"),
-        "neutral": (AppiumBy.ID, "com.spotify.music:id/gender_button_neutral"),
-        "other": (AppiumBy.ID, "com.spotify.music:id/gender_button_other"),
-        "prefer_not_to_say": (
-            AppiumBy.ID,
-            "com.spotify.music:id/gender_button_prefer_not_say",
-        ),
-    }
+    GENDER_BUTTON_TEMPLATE = "com.spotify.music:id/gender_button_{gender}"
 
     USERNAME_INPUT = (AppiumBy.ID, "com.spotify.music:id/name")
 
