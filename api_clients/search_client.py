@@ -28,5 +28,6 @@ class SearchClient(SpotifyBaseClient):
 
         track_id = tracks[0]["id"]
         self.logger.info(f"Found track ID: {track_id}")
+        allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
 
         return track_id

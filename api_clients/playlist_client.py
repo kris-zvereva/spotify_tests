@@ -36,6 +36,7 @@ class PlaylistClient(SpotifyBaseClient):
         validate(instance=playlist_data, schema=CREATE_PLAYLIST_RESPONSE)
         playlist_id = playlist_data["id"]
         self.logger.info(f"Created playlist ID: {playlist_id}")
+        allure.attach(playlist_id, "Playlist ID", allure.attachment_type.TEXT)
 
         return playlist_id
 

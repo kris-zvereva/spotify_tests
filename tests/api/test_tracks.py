@@ -15,7 +15,6 @@ class TestTracksManagement:
     @allure.description("Search for track, add to favorites, verify it is saved")
     def test_add_track_to_favs(self, search_client, user_track_client):
         track_id = search_client.get_track_id(TRACK_1_SEARCH_PARAMS)
-        allure.attach(track_id, "Track ID", allure.attachment_type.TEXT)
         assert user_track_client.add_track_to_fav(track_id)
         assert user_track_client.is_track_saved(track_id)
 
