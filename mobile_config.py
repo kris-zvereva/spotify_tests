@@ -52,7 +52,7 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
     options.app_activity = config.app_activity
 
     # BrowserStack capabilities if remote
-    context = os.getenv("MOBILE_CONTEXT", "local")
+    context = os.getenv("MOBILE_CONTEXT", "remote")
     if context == "remote":
         options.app = config.app
         options.set_capability(
@@ -73,7 +73,7 @@ def to_driver_options(config: MobileConfig) -> UiAutomator2Options:
 
 
 # Load appropriate .env file based on context
-context = os.getenv("MOBILE_CONTEXT", "local")
+context = os.getenv("MOBILE_CONTEXT", " remote")
 env_filename = ".env.mobile.bstack" if context == "remote" else ".env.mobile.local"
 
 load_env(env_filename)
