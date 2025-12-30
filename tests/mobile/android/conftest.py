@@ -17,7 +17,7 @@ def android_driver():
     """Setup Android driver (local or remote)"""
     options = to_driver_options(mobile_settings)
 
-    context = os.getenv("MOBILE_CONTEXT", "local")
+    context = os.getenv("MOBILE_CONTEXT", "remote")
     if context == "remote":
         username = os.getenv("browserstack_username")
         accesskey = os.getenv("browserstack_access_key")
