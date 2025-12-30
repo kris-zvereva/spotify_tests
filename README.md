@@ -153,7 +153,7 @@ allure serve allure-results
 ## 🔗 CI/CD Integration
 
 *[Jenkins Job](https://jenkins.autotests.cloud/job/zvereva_diploma/) is created*
-![img.png](readme_media/img.png)
+![img_1.png](readme_media/img_6.png)
 
 ### Allure Reports in Jenkins
 
