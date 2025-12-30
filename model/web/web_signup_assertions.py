@@ -1,8 +1,11 @@
 import allure
 from selene import be, browser, by, have
 
-from model.common.enums import PasswordRequirement, PasswordRequirementStatus
-from model.enums.signup_error_messages import ErrorMessages
+from model.common.enums import (
+    ErrorMessages,
+    PasswordRequirement,
+    PasswordRequirementStatus,
+)
 from model.web.web_signup_page_locators import (
     SignUpErrorLocators,
     SignUpPageLocators,
