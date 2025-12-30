@@ -1,6 +1,5 @@
 import allure
 import pytest
-from allure import step
 
 from data.user_data import TRACK_1_SEARCH_PARAMS, TRACK_IDS
 
@@ -41,27 +40,19 @@ class TestTrackInfo:
     def test_get_track_by_id_returns_album_info(self, track_client):
         track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
         track_info = track_client.get_track_info_by_id(track_data["id"])
-
-        with step("Verify album information"):
-            assert "album" in track_info
-            assert "name" in track_info["album"]
-            assert track_info["album"]["name"] == track_data["album"]
+        assert "album" in track_info
+        assert "name" in track_info["album"]
+        assert track_info["album"]["name"] == track_data["album"]
 
     @allure.title("Get track returns explicit flag")
     @allure.description("Retrieve track by ID and verify explicit flag field exists")
     def test_get_track_by_id_returns_explicit_flag(self, track_client):
-        with step("Get non-explicit track information"):
-            track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
-            track_info = track_client.get_track_info_by_id(track_data["id"])
+        track_data = TRACK_IDS["NOGA_EREZ_DUMB"]
+        track_info = track_client.get_track_info_by_id(track_data["id"])
+        assert "explicit" in track_info
+        assert track_info["explicit"] == track_data["explicit"]
 
-        with step("Verify explicit flag is False"):
-            assert "explicit" in track_info
-            assert track_info["explicit"] == track_data["explicit"]
-
-        with step("Get explicit track information"):
-            track_data = TRACK_IDS["SOFIA_ISELLA_DOLL"]
-            track_info = track_client.get_track_info_by_id(track_data["id"])
-
-        with step("Verify explicit flag is True"):
-            assert "explicit" in track_info
-            assert track_info["explicit"] == track_data["explicit"]
+        track_data = TRACK_IDS["SOFIA_ISELLA_DOLL"]
+        track_info = track_client.get_track_info_by_id(track_data["id"])
+        assert "explicit" in track_info
+        assert track_info["explicit"] == track_data["explicit"]

@@ -14,8 +14,7 @@ class TestSignUp:
         "Test verifies that a new user can successfully register through the Spotify signup form"
     )
     def test_signup_web(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(test_user["password"])
         signup_page.fill_signup_step_info(test_user)

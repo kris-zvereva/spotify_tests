@@ -15,12 +15,9 @@ class SignUpPageAndroid:
         except Exception:
             pass
 
-    @allure.step("Click signup button")
-    def click_signup_button(self):
+    @allure.step("Start signup flow with email")
+    def start_signup_email_flow(self):
         browser.element(SignUpPageLocatorsAndroid.SIGNUP_BUTTON).click()
-
-    @allure.step("Select continue with email option")
-    def click_continue_with_email(self):
         browser.element(SignUpPageLocatorsAndroid.CONTINUE_WITH_EMAIL).click()
 
     def fill_email(self, email):

@@ -12,8 +12,7 @@ class TestSignUpValidation:
     @allure.title("Email field is required")
     @allure.description("Verifies email validation error when field is skipped")
     def test_email_is_required(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.click_submit_button()
         assert_signup.verify_email_error()
 
@@ -22,8 +21,7 @@ class TestSignUpValidation:
         "Verifies password length validation rule when password is less than 10 characters"
     )
     def test_password_min_10_chars(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(INVALID_PASSWORDS["too_short"])
         assert_signup.verify_password_validation_state(
@@ -35,8 +33,7 @@ class TestSignUpValidation:
         "Verifies letter requirement validation when password has no letters"
     )
     def test_password_must_have_letter(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(INVALID_PASSWORDS["no_letter"])
         assert_signup.verify_password_validation_state(
@@ -50,8 +47,7 @@ class TestSignUpValidation:
     def test_password_must_have_number_or_special(
         self, signup_page, test_user, assert_signup
     ):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(INVALID_PASSWORDS["no_number_or_special"])
         assert_signup.verify_password_validation_state(
@@ -65,8 +61,7 @@ class TestSignUpValidation:
     def test_step_personal_info_required_fields(
         self, signup_page, test_user, assert_signup
     ):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(test_user["password"])
         signup_page.click_submit_button()
@@ -79,8 +74,7 @@ class TestSignUpValidation:
         "Verifies day validation error when value is outside valid range"
     )
     def test_birthday_day_error(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(test_user["password"])
         signup_page.fill_partial_birthday(INVALID_BIRTHDAYS["invalid_day"])
@@ -89,8 +83,7 @@ class TestSignUpValidation:
     @allure.title("Birthday month is required")
     @allure.description("Verifies month validation error when field is empty")
     def test_birthday_empty_month(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(test_user["password"])
         signup_page.fill_partial_birthday(INVALID_BIRTHDAYS["missing_month"])
@@ -99,8 +92,7 @@ class TestSignUpValidation:
     @allure.title("Birthday year must be 4 digits")
     @allure.description("Verifies error when year is not entered using 4 digits")
     def test_birthday_invalid_year(self, signup_page, test_user, assert_signup):
-        signup_page.open_signup_page()
-        signup_page.click_signup_button()
+        signup_page.start_signup_email_flow()
         signup_page.fill_signup_step_email(test_user["email"])
         signup_page.fill_signup_step_password(test_user["password"])
         signup_page.fill_partial_birthday(INVALID_BIRTHDAYS["invalid_year"])

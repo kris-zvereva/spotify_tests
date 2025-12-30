@@ -14,8 +14,7 @@ class TestSignUpAndroid:
         "Verifies user can successfully register through Spotify Android signup flow"
     )
     def test_signup_android(self, android_signup_page, test_user, assert_signup):
-        android_signup_page.click_signup_button()
-        android_signup_page.click_continue_with_email()
+        android_signup_page.start_signup_email_flow()
         android_signup_page.fill_signup_step_email(test_user["email"])
         android_signup_page.fill_signup_step_password(test_user["password"])
         android_signup_page.fill_signup_step_birthday(test_user["birthday"])

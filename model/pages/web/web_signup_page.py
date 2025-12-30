@@ -53,19 +53,16 @@ class SignUpPage:
         locator = SignUpPageLocators.GENDER_LOCATORS[user_gender]
         self._click_with_human_simulation(locator)
 
-    @allure.step("Open signup page")
-    def open_signup_page(self):
+    @allure.step("Start signup flow with email")
+    def start_signup_email_flow(self):
         browser.open(settings.WEB_URL)
         browser.element(by.xpath(SignUpPageLocators.SIGNUP_BUTTON)).should(be.visible)
+        self._click_with_human_simulation(SignUpPageLocators.SIGNUP_BUTTON)
+        browser.element(by.xpath(SignUpPageLocators.EMAIL_INPUT)).should(be.visible)
 
     @allure.step("click Next button")
     def click_submit_button(self):
         self._click_with_human_simulation(SignUpPageLocators.SUBMIT_BUTTON)
-
-    @allure.step("Click signup button")
-    def click_signup_button(self):
-        self._click_with_human_simulation(SignUpPageLocators.SIGNUP_BUTTON)
-        browser.element(by.xpath(SignUpPageLocators.EMAIL_INPUT)).should(be.visible)
 
     @allure.step("Fill email")
     def fill_signup_step_email(self, user_email):
